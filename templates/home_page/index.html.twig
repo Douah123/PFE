@@ -1,0 +1,82 @@
+
+{% extends 'Layouts/base.html.twig' %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+    <!-- Search Box -->
+         <div class="slider-active">
+                <div class="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.jpg">
+                    <div class="container">
+                        <div class="row ">
+                            <div class="col-xl-8">
+                                 {% include 'home_page/form.html.twig' with {'form': form} only %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <section class="featured-job-area feature-padding">
+            <div class="container">
+                <!-- Section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle text-center">
+                            <span>Recent Job</span>
+                            <h2>Featured Jobs</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-xl-10">
+                        <!-- single-job-content -->
+                        {% for job in job %}  
+                            <div class="single-job-items mb-30">
+                                <div class="job-items">
+                                    <div class="company-img">
+                                        {% if job.imageName is defined and job.imageName is not empty %}
+                                            <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><img src="{{ vich_uploader_asset(job, 'imageFile') }}" alt=""></a>
+                                        {% else %}
+                                            <a href="{{ path('app_job_detail', { 'id': job.id }) }}"></a>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="job-tittle">
+                                        <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><h4>{{ job.title }}</h4></a>
+                                        <ul>
+                                            <li>>{{ job.category }}</li>
+                                            <li><i class="fas fa-map-marker-alt"></i>{{ job.location }}</li>
+                                            <li>{{ job.salary }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="items-link f-right">
+                                    <a href="job_details.html">{{ job.type }}</a>
+                                    <span>{{ job.createdAt|ago }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Featured_job_end -->
+        <!--Pagination Start  -->
+        <div class="pagination-area pb-115 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="single-wrap d-flex justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-start">
+                            {{ knp_pagination_render(job) }}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'Layouts/base.html.twig' %}
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Postuler pour cette offre</h1>
+  
+    <div class="candidature-form">
+        <div class="col-md-6 offset-md-3">
+            {{ form_start(form) }}
+            {{ form_row(form.Nom, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.Prenom, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.Niveau, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.Ville, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.imageFileLettreMotivation, {'attr': {'class': 'form-control-file'}}) }}
+            {{ form_row(form.imageFileCV, {'attr': {'class': 'form-control-file'}}) }}<br>
+            <button type="submit" class="btn btn-primary">Soumettre</button><br>
+            {{ form_end(form) }}
+            <br>
+        </div>
+    </div>
+  
+{% endblock %}

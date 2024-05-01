@@ -1,0 +1,20 @@
+
+
+{% block title %}Inscription Employeur{% endblock %}
+
+{% block body %}
+    <h1>Inscription Employeur</h1>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            {{ form_start(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.sector) }}
+            {{ form_row(form.email) }}
+            {{ form_row(form.adress) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.description) }}
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

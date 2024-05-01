@@ -1,0 +1,55 @@
+{% extends 'Layouts/base.html.twig' %}
+
+
+{% block body %}
+<div class="indexjob " style="font-size: small;">
+ <title>Job index</title>
+
+  <h1>Job index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Salary</th>
+                <th>Logo</th> 
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>ExpiresAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.id }}</td>
+                <td>{{ job.title }}</td>
+                <td>{{ job.type }}</td>
+                <td>{{ job.description|slice(0,10) }}...</td>
+                <td>{{ job.location }}</td>
+                <td>{{ job.salary }}</td>
+                <td>{{ job.imageName|slice(0,5) }}</td>
+                <td>{{ job.createdAt ? job.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ job.expiresAt ? job.expiresAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_job_show', {'id': job.id}) }}">show</a><br>
+                    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a><br>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_job_new') }}">Create new</a>
+</div>      
+
+{% endblock %}

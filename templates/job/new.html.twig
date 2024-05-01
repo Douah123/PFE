@@ -1,0 +1,17 @@
+{% extends 'Layouts/base.html.twig' %}
+
+
+{% block navbar %}{% endblock %}
+
+{% block body %}
+<title>New Job</title>
+<div class="job-form" style="font-size: small;">
+    <h1>Create new Job</h1>
+
+    {{ include('job/_form.html.twig') }}
+    <br>
+    <a href="{{ path('app_job_index') }}" style="text-decoration": underline;>back to list</a>
+</div>  
+{% block footer %}{% endblock %}
+{% endblock %}
+

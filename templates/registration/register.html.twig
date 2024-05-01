@@ -1,0 +1,41 @@
+{% extends 'Layouts/base.html.twig' %}
+{% block body%}
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+</head>
+<body>
+    {% block navbar %}{% endblock %}
+
+   
+        {% for flash_error in app.flashes('verify_email_error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+    <div class="register-form">
+        <div class="container">
+            <h1>Register</h1>
+
+            {{ form_errors(registrationForm) }}
+
+            {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-small'}}) }} <!-- Utilisation de la classe pour limiter la largeur -->
+                {{ form_row(registrationForm.firstName, {'attr': {'class': 'form-control form-control-small'}}) }}
+                {{ form_row(registrationForm.lastName, {'attr': {'class': 'form-control form-control-small'}}) }}
+                {{ form_row(registrationForm.plainPassword, {'label': 'Password', 'attr': {'class': 'form-control form-control-small'}}) }}
+                {{ form_row(registrationForm.agreeTerms) }}
+                <br>
+
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+    
+
+    {% block footer %}{% endblock %}
+</body>
+</html>
+{% endblock %}

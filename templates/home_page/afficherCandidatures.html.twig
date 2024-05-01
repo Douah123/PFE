@@ -1,0 +1,59 @@
+ {% extends 'Layouts/base.html.twig' %}
+
+{% block title %} Home {% endblock %}
+
+{% block body %}
+ 
+   <h2>Candidatures</h2>
+   <div class="container">
+        <table>
+            <tr style="border-bottom: 1px solid #ccc;">
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Niveau</th>
+                <th>Ville</th>
+                <th>Offre</th>
+                <th>Entreprise</th>
+                <th>Lettre de Motivation</th>
+                <th>CV</th>
+                <th>Statut</th>
+                {# Ajoutez d'autres colonnes si nécessaire #}
+            </tr>
+            {% for candidature in candidatures %}
+                <tr style="border-bottom: 1px solid #ccc;">
+                    <td>{{ candidature.nom }}</td>
+                    <td>{{ candidature.prenom }}</td>
+                    <td>{{ candidature.email }}</td>
+                    <td>{{ candidature.Niveau }}</td>
+                    <td>{{ candidature.Ville }}</td>
+                    <td>{{ candidature.offer.title }}</td>
+                <td>
+                        {% if candidature.offer is not null and candidature.offer.employeur is not null %}
+                            {{ candidature.offer.employeur.name }}
+                        {% else %}
+                            Employeur inconnu
+                    {% endif %}
+                    </td>
+                    <td>
+                        {% if candidature.LettreMotivation %}
+                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download>Télécharger</a></p>
+                        {% else %}
+                            <p>Pas de lettre de motivation téléchargée</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if candidature.CV %}
+                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download>Télécharger</a></p>
+                        {% else %}
+                            <p>Pas de CV téléchargé</p>
+                        {% endif %}
+                    </td>
+                    {# Ajoutez d'autres cellules de données si nécessaire #}
+                    <td>{{ candidature.Status }}</td>
+                </tr>
+                
+            {% endfor %}
+        </table>
+     </div>
+{% endblock %}
