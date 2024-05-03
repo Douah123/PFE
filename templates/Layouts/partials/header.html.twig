@@ -39,19 +39,20 @@
                                         </nav>
                                     </div>          
                                     <!-- Header-btn -->
-                                    <div class="header-btn d-none f-right d-lg-block">
-                                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                            {# Si l'utilisateur est connecté, afficher l'icône de profil #}
-                                            <a href="" class="profile-icon">
-                                                <img src="" alt="Profile" class="profile-image">
-                                            </a>
-                                        {% else %}
-                                            {# Sinon, afficher le bouton de connexion #}
-                                            <a href="{{ path('app_login') }}" class="btn head-btn1">Se Connecter</a>
-                                        {% endif %}
-                                        <a href="{{path('accueil_employeur')}}" class="btn head-btn1">Passer à Employeur</a>
-    
-                                    </div>
+                                        <div class="header-btn d-none f-right d-lg-block">
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {# Si l'utilisateur est connecté, afficher l'icône de profil #}
+                                                <a href="" class="profile-icon">
+                                                    <img src="" alt="Profile" class="profile-image">
+                                                </a>
+                                            {% else %}
+                                                {# Sinon, afficher le bouton de connexion #}
+                                                <a href="{{ path('app_login') }}" class="btn head-btn1">Se Connecter</a>
+                                            {% endif %}
+                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1">Passer à Employeur</a>
+        
+                                        </div>
+
                                 </div>
                             </div>
                             <!-- Mobile Menu -->

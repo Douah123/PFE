@@ -1,0 +1,22 @@
+{% extends 'Layouts/base.html.twig' %}
+
+
+{% block navbar %}{% endblock %}
+{% block body %}
+<title>Edition du profil</title>
+<div class="login-form">
+    <h1 class="mt-4">Modifier votre profil</h1>
+    {{ form_start(form) }}
+    <label>Email </label>
+    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+    <label>FirstName</label>
+    {{ form_widget(form.firstName, {'attr': {'class': 'form-control'}}) }}
+    <label>LastName </label>
+    {{ form_widget(form.lastName, {'attr': {'class': 'form-control'}}) }}
+    <label>Mot de passe </label>
+    {{ form_widget(form.plainPassword, {'attr': {'class': 'form-control'}}) }}
+    <br><br>
+    {{ form_end(form) }}
+</div>
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -7,7 +7,7 @@
 
   <h1>Job index</h1>
 
-    <table class="table">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
@@ -37,8 +37,9 @@
                 <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ job.expiresAt ? job.expiresAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_job_show', {'id': job.id}) }}">show</a><br>
-                    <a href="{{ path('app_job_edit', {'id': job.id}) }}">edit</a><br>
+                    <a href="{{ path('app_job_show', {'id': job.id}) }}"><button class="butt">Show</button></a><br><br>
+                    <a href="{{ path('app_job_edit', {'id': job.id}) }}"><button class="butt">Editer</button ></a><br>
+
                 </td>
             </tr>
         {% else %}
@@ -49,7 +50,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_job_new') }}">Create new</a>
+    <a href="{{ path('app_job_new') }}"><button class="btn btn-primary">Create New</button</a>
 </div>      
 
 {% endblock %}

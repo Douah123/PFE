@@ -143,6 +143,11 @@ class JobController extends AbstractController
             throw $this->createNotFoundException('La candidature n\'existe pas.');
         }
         else{
+            
+            $candidature->setStatus('Refusée');
+        
+                $entityManager->persist($candidature);
+                $entityManager->flush();
             // Créer le formulaire pour le statut de la candidature
             $statusForm = $this->createForm(StatusCandidatureType::class, null, [
                 'action' => $this->generateUrl('accept_candidature', ['id' => $job->getId(), 'candidatureId' => $candidature->getId()]),
@@ -152,6 +157,7 @@ class JobController extends AbstractController
             // Traiter la soumission du formulaire
             $statusForm->handleRequest($request);
             if ($statusForm->isSubmitted() && $statusForm->isValid()) {
+                
                 $status = $statusForm->get('status')->getData();
 
                 // Obtenez la candidature associée

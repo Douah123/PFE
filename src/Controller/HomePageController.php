@@ -13,6 +13,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\JobRepository;
 use Knp\Component\Pager\PaginatorInterface;
 
+
+
 class HomePageController extends AbstractController
 {
     #[Route('/', name: 'app_home_page')]
@@ -20,16 +22,18 @@ class HomePageController extends AbstractController
     {  
        
        $SearchData = New SearchData();
+      
        $form = $this->createForm(SearchType::class, $SearchData);
        $form->handleRequest($request);
 
        if ($form->isSubmitted() && $form->isValid()) {
            $SearchData->page = $request->query->getInt('page', 1);
            $job = $jobRepository->findBySearch($SearchData);
-
+        
            return $this->render('home_page/index.html.twig', [
             'form'=>$form->createview(),
             'job'=> $job, 
+             
         ]);
 
          }
