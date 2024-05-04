@@ -8,6 +8,13 @@
          <div class="slider-active">
                 <div class="single-slider slider-height d-flex align-items-center" data-background="assets/img/hero/h1_hero.jpg">
                     <div class="container">
+                         <div class="row">
+                            <div class="col-xl-6 col-lg-9 col-md-10">
+                                <div class="hero__caption">
+                                    <h1 style="font-weight: bold; margin-bottom: 70px;">Find the most exciting startup jobs</h1>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row ">
                             <div class="col-xl-8">
                                  {% include 'home_page/form.html.twig' with {'form': form} only %}
@@ -16,7 +23,7 @@
                     </div>
                 </div>
             </div>
-    <section class="featured-job-area feature-padding">
+        <section class="featured-job-area feature-padding">
             <div class="container">
                 <!-- Section Tittle -->
                 <div class="row">
@@ -33,7 +40,7 @@
                         {% for job in job %}  
                             <div class="single-job-items mb-30">
                                 <div class="job-items">
-                                    <div class="company-img">
+                                    <div class="company-img" style="border-radius: 10px;">
                                         {% if job.imageName is defined and job.imageName is not empty %}
                                             <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><img src="{{ vich_uploader_asset(job, 'imageFile') }}" alt=""></a>
                                         {% else %}
@@ -77,6 +84,7 @@
         </div>
     </div>
 </div>
+
 
 
 {% endblock %}

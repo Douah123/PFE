@@ -1,5 +1,6 @@
     <!-- Preloader Start -->
     <header>
+    <div class="container">
         <div id="preloader-active">
             <div class="preloader d-flex align-items-center justify-content-center">
                 <div class="preloader-inner position-relative">
@@ -27,7 +28,7 @@
                             <div class="col-lg-9 col-md-9">
                                 <div class="menu-wrapper">
                                     <!-- Main-menu -->
-                                    <div class="main-menu">
+                                    <div class="main-menu ">
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
                                                 <li><a href="index.html">Accueil</a></li>
@@ -42,14 +43,16 @@
                                         <div class="header-btn d-none f-right d-lg-block">
                                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                                                 {# Si l'utilisateur est connecté, afficher l'icône de profil #}
-                                                <a href="" class="profile-icon">
-                                                    <img src="" alt="Profile" class="profile-image">
-                                                </a>
+                                               
+                                                    <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
+                                                        <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
+                                                    </a>
+                                                
                                             {% else %}
                                                 {# Sinon, afficher le bouton de connexion #}
-                                                <a href="{{ path('app_login') }}" class="btn head-btn1">Se Connecter</a>
+                                                <a href="{{ path('app_login') }}" class="btn head-btn1" style="border-radius: 10px;">Se Connecter</a>
                                             {% endif %}
-                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1">Passer à Employeur</a>
+                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1" style="border-radius: 10px;">Passer à Employeur</a>
         
                                         </div>
 
@@ -63,5 +66,6 @@
                     </div>
             </div>
         </div>
+    </div>
             <!-- Header End -->
     </header>
