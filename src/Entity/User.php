@@ -50,6 +50,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'user_')]
     private Collection $candidatures;
 
+    #[ORM\Column(length: 255)]
+    private ?string $phoneNumber = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Country = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Region = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Adress = null;
+
     public function __construct()
     {
         $this->candidatures = new ArrayCollection();
@@ -204,6 +216,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $candidature->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(string $phoneNumber): static
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->Country;
+    }
+
+    public function setCountry(string $Country): static
+    {
+        $this->Country = $Country;
+
+        return $this;
+    }
+
+    public function getRegion(): ?string
+    {
+        return $this->Region;
+    }
+
+    public function setRegion(string $Region): static
+    {
+        $this->Region = $Region;
+
+        return $this;
+    }
+
+    public function getAdress(): ?string
+    {
+        return $this->Adress;
+    }
+
+    public function setAdress(string $Adress): static
+    {
+        $this->Adress = $Adress;
 
         return $this;
     }

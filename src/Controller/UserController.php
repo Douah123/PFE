@@ -41,7 +41,7 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_home_page');
             
         }
-        return $this->render('user/edit.html.twig', [
+        return $this->render('user/boot.html.twig', [
             'form' => $form->createview(),
             'user' => $user,
         ]);
@@ -79,4 +79,5 @@ class UserController extends AbstractController
            
         ]);
     }
+
 }

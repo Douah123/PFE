@@ -20,7 +20,7 @@
                             <div class="col-lg-3 col-md-2">
                                 <!-- Logo -->
                                 <div class="logo">
-                                    <img src="{{ asset('assets/img/logo/foremployers.jpg') }}" alt="">
+                                    <img src="{{ asset('assets/img/logo/logo2.png') }}" alt="">
                                 </div>
  
                             </div>
@@ -39,11 +39,22 @@
                                         </nav>
                                     </div>          
                                     <!-- Header-btn -->
-                                    <div class="header-btn d-none f-right d-lg-block">
-                                        <a href="{{path('app_login')}}" class="btn head-btn1">Se Connecter</a>
-                                        <a href="{{path('accueil_employeur')}}" class="btn head-btn1">Créez un compte</a>
-    
-                                    </div>
+                                    <!-- Header-btn -->
+                                        <div class="header-btn d-none f-right d-lg-block">
+                                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                {# Si l'utilisateur est connecté, afficher l'icône de profil #}
+                                               
+                                                    <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
+                                                        <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
+                                                    </a>
+                                                
+                                            {% else %}
+                                                {# Sinon, afficher le bouton de connexion #}
+                                                <a href="{{ path('app_login') }}" class="btn head-btn1" style="border-radius: 5px;">Se Connecter</a>
+                                            {% endif %}
+                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1" style="border-radius: 5px;">Passer à Employeur</a>
+        
+                                        </div>
                                 </div>
                             </div>
                             <!-- Mobile Menu -->

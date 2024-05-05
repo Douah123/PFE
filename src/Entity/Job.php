@@ -53,7 +53,7 @@ class Job
     #[ORM\ManyToOne(inversedBy: 'job')]
     private ?Employeur $employeur = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $imageName = null;
 
    
@@ -230,7 +230,7 @@ class Job
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): static
+    public function setImageName(?string $imageName): static
     {
         $this->imageName = $imageName;
 

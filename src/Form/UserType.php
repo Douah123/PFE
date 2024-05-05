@@ -24,8 +24,16 @@ class UserType extends AbstractType
                 'placeholder' => 'Entrez votre nouvel adresse email'
             ]
         ])
-            ->add('firstName')
-            ->add('lastName')
+        ->add('firstName', null, [
+            'label' => 'Votre ',
+        ])
+        ->add('lastName', null, [
+            'label' => 'Votre ',
+        ])
+            ->add('phoneNumber')
+            ->add('Country')
+            ->add('Region')
+            ->add('Adress')
             ->add('plainPassword', PasswordType::class, [
                 
                 'mapped' => false,

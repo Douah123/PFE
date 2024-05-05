@@ -19,7 +19,7 @@ class JobType extends AbstractType
             ->add('salary')
             ->add('category')
             ->add('description')
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class,)
             #->add('createdAt')
             #->add('updatedAt')
             #->add('expiresAt')
