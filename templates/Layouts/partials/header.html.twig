@@ -1,4 +1,12 @@
     <!-- Preloader Start -->
+
+{% for type, messages in app.flashes(['succes', 'error', 'warning']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }} text-center mb-0">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}   
     <header>
     <div class="container">
         <div id="preloader-active">
@@ -32,8 +40,8 @@
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
                                                 <li><a href="index.html">Accueil</a></li>
-                                                <li><a href="{{ path('listes_jobs') }}">Jobs</a></li>
-                                                <li><a href="{{ path('afficher_candidatures') }}">Candidatures</a></li>
+                                                <li><a href="{{ path('afficher_candidatures') }}">Mes candidatures</a></li>
+                                                <li><a href="">A propos</a></li>
                                                 
                                                 <li><a href="contact.html">Contact</a></li>
                                             </ul>
@@ -50,9 +58,9 @@
                                                 
                                             {% else %}
                                                 {# Sinon, afficher le bouton de connexion #}
-                                                <a href="{{ path('app_login') }}" class="btn head-btn1" style="border-radius: 5px;">Se Connecter</a>
+                                                <a href="{{ path('app_login') }}" class="btn head-btn2" style="border-radius: 5px; padding: 20px 20px;">Se Connecter</a>
                                             {% endif %}
-                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1" style="border-radius: 5px;">Passer à Employeur</a>
+                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Passer à Employeur</a>
         
                                         </div>
 

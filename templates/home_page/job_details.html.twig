@@ -1,6 +1,7 @@
 
 {% extends 'Layouts/base.html.twig' %}
 {% block title %}job_details{% endblock %}
+
  {% block navbar %}{% endblock %}
 {% block body %}
 <!-- Hero Area Start-->
@@ -32,7 +33,11 @@
                           <div class="single-job-items mb-50">
                             <div class="job-items">
                                 <div class="company-img company-img-details">
-                                    <a href="#"><img src="assets/img/icon/job-list1.png" alt=""></a>
+                                    {% if jobDetail.imageName is defined and jobDetail.imageName is not empty %}
+                                            <a href="{{ path('app_job_detail', { 'id': jobDetail.id }) }}"><img src="{{ vich_uploader_asset(jobDetail, 'imageFile') }}" alt=""></a>
+                                        {% else %}
+                                            <a href="{{ path('app_job_detail', { 'id': jobDetail.id }) }}"></a>
+                                        {% endif %}
                                 </div>
                                 <div class="job-tittle">
                                     <a href="{{ path('app_job_detail', { 'id': jobDetail.id }) }}">
@@ -69,27 +74,27 @@
                                <h4>Job Overview</h4>
                            </div>
                           <ul>
-                              <li>Posted date : <span>{{ jobDetail.createdAt|date('j F Y') }}</span></li>
-                              <li>Location : <span>{{ jobDetail.location }}</span></li>
-                              <li>Job nature : <span>{{ jobDetail.type }}</span></li>
-                              <li>Salary :  <span>{{ jobDetail.salary }}</span></li>
-                              <li>Application date : <span>{{ jobDetail.expiresAt|date('j F Y') }}</span></li>
+                              <li>Publié le : <span>{{ jobDetail.createdAt|date('j F Y') }}</span></li>
+                              <li>Emplacement : <span>{{ jobDetail.location }}</span></li>
+                              <li>Type de contrat : <span>{{ jobDetail.type }}</span></li>
+                              <li>Salaire :  <span>{{ jobDetail.salary }}</span></li>
+                              <li>Expire le : <span>{{ jobDetail.expiresAt|date('j F Y') }}</span></li>
                           </ul>
                          <div class="apply-btn2">
-                            <a href="{{ path('postuler', {'id': jobDetail.id}) }}" class="btn">Apply Now</a>
+                            <a href="{{ path('postuler', {'id': jobDetail.id}) }}" class="btn" style="border-radius: 5px;">Postuler</a>
                          </div>
                        </div>
                         <div class="post-details4  mb-50">
                             <!-- Small Section Tittle -->
                            <div class="small-section-tittle">
-                               <h4>Company Information</h4>
+                               <h4>Information de l'Entreprise</h4>
                            </div>
-                              <span>Colorlib</span>
-                              <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                              <span>Description</span>
+                              <p>{{ employeur.description }}</p>
                             <ul>
-                                <li>Name: <span>Colorlib </span></li>
-                                <li>Web : <span> colorlib.com</span></li>
-                                <li>Email: <span>carrier.colorlib@gmail.com</span></li>
+                                <li>Name: <span>{{ employeur.name }}</span></li>
+                                <li>Adresse : <span>{{ employeur.adress }}</span></li>
+                                <li>Email: <span>{{ employeur.email }}</span></li>
                             </ul>
                        </div>
                     </div>

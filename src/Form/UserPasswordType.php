@@ -19,12 +19,12 @@ class UserPasswordType extends AbstractType
     {
         $builder
             ->add('plainPassword', PasswordType::class, [
-                    
+                'label' => 'Ancien mot de passe' , 
                 'mapped' => false,
                 'attr' => [
-                    'label' => 'Ancien mot de passe',
+                   
                     'autocomplete' => 'new-password',
-                    'class' => 'form-control',
+                    'class' => 'form-control'
                 ],
                 
                 'constraints' => [
@@ -47,6 +47,7 @@ class UserPasswordType extends AbstractType
                 'required' => true,
                 'first_options'  => ['label' => 'Nouveau mot de passe'],
                 'second_options' => ['label' => 'Confirmation du mot de passe'],
+                
                 'mapped' => false,
                 'constraints' => [
                     new Assert\NotBlank([
@@ -62,13 +63,17 @@ class UserPasswordType extends AbstractType
                         'pattern' => '/^(?=.*[A-Z])(?=.*\d).+$/',
                         'message' => 'Your password must contain at least one uppercase letter and one digit.',
                     ]),
+                    
                 ],
+                
             ])
         
             ->add('submit', SubmitType::class, [
                 'label' => 'Modifier',
                 'attr' => [
-                    'class' => 'btn btn-block' 
+                    'class' => 'btn btn-block',
+                    'style' => 'border-radius: 5px; margin-top: 20px;'
+                    
                 ]
             ])
         

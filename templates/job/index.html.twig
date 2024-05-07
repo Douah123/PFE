@@ -1,4 +1,4 @@
-{% extends 'Layouts/base.html.twig' %}
+{% extends 'Layouts/base2.html.twig' %}
 
 
 {% block body %}
@@ -11,15 +11,15 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Title</th>
+                <th>Titre</th>
                 <th>Type</th>
                 <th>Description</th>
-                <th>Location</th>
-                <th>Salary</th>
+                <th>Emplacement</th>
+                <th>Salaire</th>
                 <th>Logo</th> 
-                <th>CreatedAt</th>
-                <th>UpdatedAt</th>
-                <th>ExpiresAt</th>
+                <th>Créé à</th>
+                <th>Modifié à</th>
+                <th>Expire à</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -37,20 +37,20 @@
                 <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ job.expiresAt ? job.expiresAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_job_show', {'id': job.id}) }}"><button class="butt">Show</button></a><br><br>
-                    <a href="{{ path('app_job_edit', {'id': job.id}) }}"><button class="butt">Editer</button ></a><br>
+                    <a href="{{ path('app_job_show', {'id': job.id}) }}"><button class="btn btn-sm" style=" padding: 20px 20px; border-radius: 5px;">Consulter</button></a><br><br>
+                    <a href="{{ path('app_job_edit', {'id': job.id}) }}"><button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;">Modifier</button ></a><br>
 
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="10">Vous n'avez posté aucune offre</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_job_new') }}"><button class="btn btn-primary">Create New</button</a>
+    <a href="{{ path('app_job_new') }}"><button class="btn" style="border-radius: 5px;">Ajouter une offre</button</a>
 </div>      
 
 {% endblock %}

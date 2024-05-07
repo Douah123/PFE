@@ -63,7 +63,7 @@ public function findPublished(int $page): PaginationInterface {
         ->getQuery()
         ->getResult();
 
-        $job = $this->paginatorInterface->paginate($data, $page, 2);
+        $job = $this->paginatorInterface->paginate($data, $page, 5);
         return $job;
 }
 /**
@@ -97,7 +97,7 @@ public function findBySearch(SearchData $SearchData): PaginationInterface {
         ->getQuery()
         ->getResult();
 
-    $job = $this->paginatorInterface->paginate($data, $SearchData->page, 2);
+    $job = $this->paginatorInterface->paginate($data, $SearchData->page, 5);
     return $job;
 }
 

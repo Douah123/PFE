@@ -1,4 +1,11 @@
 <!-- Preloader Start -->
+{% for type, messages in app.flashes(['succes', 'error', 'warning']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }} text-center mb-0">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %} 
     <header>
         <div id="preloader-active">
             <div class="preloader d-flex align-items-center justify-content-center">
@@ -31,7 +38,7 @@
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
                                                 <li><a href="index.html">Accueil</a></li>
-                                                <li><a href="{{ path('app_job_index') }}">Offres</a></li>
+                                                <li><a href="{{ path('app_job_index') }}">Mes Offres</a></li>
                                                 <li><a href="about.html">A propos</a></li>
                                                 
                                                 <li><a href="contact.html">Contact</a></li>
@@ -42,17 +49,28 @@
                                     <!-- Header-btn -->
                                         <div class="header-btn d-none f-right d-lg-block">
                                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                                {# Si l'utilisateur est connecté, afficher l'icône de profil #}
-                                               
-                                                    <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
-                                                        <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
-                                                    </a>
-                                                
+                                                    {% set user = app.user %}
+                                                    {% if not user or  user.getEmployeur() %}
+                                                       
+                                                        <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
+                                                            <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
+                                                        </a>
+                                                        
+                                                        <a href="{{path('app_job_new')}}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Publier une offre</a>
+                                                    {% else %}
+                                                        
+                                                        <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
+                                                            <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
+                                                        </a>
+                                                        
+                                                       <a href="{{ path('app_employeur') }}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Créer un compte</a>
+                                                    {% endif %}
                                             {% else %}
-                                                {# Sinon, afficher le bouton de connexion #}
-                                                <a href="{{ path('app_login') }}" class="btn head-btn1" style="border-radius: 5px;">Se Connecter</a>
+                                                
+                                                <a href="{{ path('app_login') }}" class="btn head-btn2" style="border-radius: 5px; padding: 20px 20px;">Se Connecter</a>
+                                                <a href="{{ path('app_employeur') }}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Créer un compte</a>
                                             {% endif %}
-                                            <a href="{{path('accueil_employeur')}}" class="btn head-btn1" style="border-radius: 5px;">Passer à Employeur</a>
+
         
                                         </div>
                                 </div>

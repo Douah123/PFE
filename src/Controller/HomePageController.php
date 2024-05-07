@@ -15,6 +15,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 
 
+
 class HomePageController extends AbstractController
 {
     #[Route('/', name: 'app_home_page')]
@@ -47,9 +48,13 @@ class HomePageController extends AbstractController
     #[Route('/job/details/{id<[0-9]+>}', name: 'app_job_detail')]
     public function jobDetail($id, jobRepository $jobRepository): Response
     {
+        
         $jobId = $jobRepository->find($id);
+        $employeur = $jobId->getEmployeur();
         return $this->render('home_page/job_details.html.twig', [
-            'jobDetail'=>$jobRepository->find($jobId)
+            'jobDetail'=>$jobRepository->find($jobId),
+            'employeur'=> $employeur
+            
             
         ]);
 

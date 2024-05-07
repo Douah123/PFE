@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class JobType extends AbstractType
 {
@@ -14,7 +15,18 @@ class JobType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('type')
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'CDD' => 'CDD',
+                    'CDI' => 'CDI',
+                    'Temps plein' => 'Temps plein',
+                    'Temps partiel' => 'Temps partiel',
+                    'CIVP' => 'CIVP',
+                ],
+                'attr' => [
+                        'label' => 'Type de contrat',
+                 ],
+            ])
             ->add('location')
             ->add('salary')
             ->add('category')

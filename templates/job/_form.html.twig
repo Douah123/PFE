@@ -1,17 +1,17 @@
 {{ form_start(form) }}
     <label>Titre </label>
-    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-    <label>Type</label>
-    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}
-    <label>Location </label>
+    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}<br>
+    <label>Type de contrat </label>
+    {{ form_widget(form.type, {'attr': {'class': 'form-control'}}) }}<br><br><br>
+    <label>Emplacement </label>
     {{ form_widget(form.location, {'attr': {'class': 'form-control'}}) }}
-    <label>Salary</label>
+    <label>Salaire</label>
     {{ form_widget(form.salary, {'attr': {'class': 'form-control'}}) }}
-    <label>Category</label><br>
+    <label>Categorie</label><br>
     {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}<br><br><br>
     <label>Description</label>
     {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}<br>
-    <label>Ajoutez le logo de votre</label>
+    <label>Ajoutez le logo de votre Entreprise</label>
      {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}<br>
-    <button class="btn btn-block">{{ button_label|default('Save') }}</button>
+    <button class="btn btn-block" style="border-radius: 5px;">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

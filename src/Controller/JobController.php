@@ -29,12 +29,18 @@ class JobController extends AbstractController
         if ($user->getEmployeur()) {
             $employeur = $user->getEmployeur();
             $job = $jobRepository->findBy(['employeur' => $employeur]);
+        }
+        else{
+                $this->addFlash('warning', 'Veuillez vous inscrire en tant qu\'employeur pour consulter vos offres.');
+                return $this->redirectToRoute('accueil_employeur');
+        }
+            
             
        
         return $this->render('job/index.html.twig', [
             'jobs' => $job,
         ]);
-        }
+        
     }
 
     #[Route('/new', name: 'app_job_new', methods: ['GET', 'POST'])]

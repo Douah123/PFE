@@ -17,12 +17,8 @@ class CandidatureType extends AbstractType
             ->add('email')
             ->add('Niveau')
             ->add('Ville')
-            ->add('imageFileCV', VichFileType::class, [
-                'label' => 'CV', // Libellé pour le champ imageFileCV
-            ])
-            ->add('imageFileLettreMotivation', VichFileType::class, [
-                'label' => 'Lettre de motivation', // Libellé pour le champ imageFileLettreMotivation
-            ])
+            ->add('imageFileCV', VichFileType::class,)
+            ->add('imageFileLettreMotivation', VichFileType::class,)
         ;
     }
 

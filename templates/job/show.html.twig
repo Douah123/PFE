@@ -1,11 +1,11 @@
 
-{% extends 'Layouts/base.html.twig' %}
+{% extends 'Layouts/base2.html.twig' %}
 
 
 {% block body %}
     <title>Job</title>
     <h1>Job</h1>
- <div class="container style="font-size: small;">
+ 
     <div class="row">
         <div class="col-md-8 mx-auto">
             <table class="table table-bordered">
@@ -63,6 +63,7 @@
                     <th>Ville</th>
                     <th>Lettre de Motivation</th>
                     <th>CV</th>
+                    <th>Actions</th>
                     {# Ajoutez d'autres colonnes si nécessaire #}
                 </tr>
                 
@@ -75,14 +76,14 @@
                         <td>{{ candidature.Ville }}</td>
                         <td>
                             {% if candidature.LettreMotivation %}
-                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download><button class="butt">Télecharger</button></a></p>
+                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download><button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
                             {% else %}
                                 <p>Pas de lettre de motivation téléchargée</p>
                             {% endif %}
                         </td>
                         <td>
                             {% if candidature.CV %}
-                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download><button class="butt">Télecharger</button></a></p>
+                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download><button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
                             {% else %}
                                 <p>Pas de CV téléchargé</p>
                             {% endif %}
@@ -91,11 +92,12 @@
                             {% if candidature.status == 'En attente' %}
                                 <form action="{{ path('accept_candidature', {'id': job.id, 'candidatureId': candidature.id}) }}" method="post">
                                     
-                                    <button type="submit">Accepter</button>
+                                    <button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;" type="submit">Accepter</button>
                                 </form>
+                                <br>
                                 <form action="{{ path('refuse_candidature', {'id': job.id, 'candidatureId': candidature.id}) }}" method="post">
                                     
-                                    <button type="submit">Refuser</button>
+                                    <button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px; " type="submit">Refuser</button>
                                 </form>
                             {% else %}
                                 <p>Statut: {{ candidature.status }}</p>
@@ -115,5 +117,7 @@
         
 
             {{ include('job/_delete_form.html.twig') }}
+     </div>   
  </div>
+ <br><br>
 {% endblock %}

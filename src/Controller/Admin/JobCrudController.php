@@ -3,7 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Job;
-use App\Entity\Cateory;
+use App\Entity\Category;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -29,7 +29,8 @@ class JobCrudController extends AbstractCrudController
         return $crud
         ->setEntityLabelInPlural('Offres')
         ->setEntityLabelInSingular('Offre')
-        ->setPageTitle('index', 'Administration des Offres');
+        ->setPageTitle('index', 'Administration des Offres')
+        ->setPaginatorPageSize(5);
     }
 
     

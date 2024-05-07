@@ -7,6 +7,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authorization\IsGranted;
+use App\Entity\User;
+
+
 
 
 
@@ -14,9 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashboardController extends AbstractDashboardController
 {
     #[Route('/admin', name: 'admin_index')]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(): Response
     {
-       
+        if (!$this->getUser()) {
+           
+            return $this->redirectToRoute('app_login');
+        }
+        
          return $this->render('admin/dashboard.html.twig');
     }
 
@@ -25,12 +34,16 @@ class DashboardController extends AbstractDashboardController
         return Dashboard::new()
             ->setTitle('JobFinder-Administration');
             
+            
+            
     }
+   
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Gérer utilisateurs', 'fa-solid fa-user', User::class)->setController(UserCrudController::class);
         yield MenuItem::linkToCrud('Gérer Offres', 'fa-solid fa-briefcase', Job::class)->setController(JobCrudController::class);
+        yield MenuItem::linkToCrud('Gérer Categories', 'fa-solid fa-layer-group', Job::class)->setController(CategoryCrudController::class);
     }
 }

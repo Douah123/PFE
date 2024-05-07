@@ -6,7 +6,7 @@
  
    <h2>Candidatures</h2>
    <div class="container">
-        <table>
+        <table class="table table-bordered">
             <tr style="border-bottom: 1px solid #ccc;">
                 <th>Nom</th>
                 <th>Prenom</th>
@@ -37,14 +37,14 @@
                     </td>
                     <td>
                         {% if candidature.LettreMotivation %}
-                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download>Télécharger</a></p>
+                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download><button class="btn btn-sm" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
                         {% else %}
                             <p>Pas de lettre de motivation téléchargée</p>
                         {% endif %}
                     </td>
                     <td>
                         {% if candidature.CV %}
-                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download>Télécharger</a></p>
+                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download><button class="btn btn-sm" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
                         {% else %}
                             <p>Pas de CV téléchargé</p>
                         {% endif %}
@@ -52,8 +52,13 @@
                     {# Ajoutez d'autres cellules de données si nécessaire #}
                     <td>{{ candidature.Status }}</td>
                 </tr>
+                {% else %}
+            <tr>
+                <td colspan="10">Vous n'avez pas encore postuler à une offre</td>
+            </tr>
                 
             {% endfor %}
         </table>
      </div>
+
 {% endblock %}

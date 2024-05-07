@@ -23,7 +23,8 @@ class UserCrudController extends AbstractCrudController
         return $crud
         ->setEntityLabelInPlural('Utilisateurs')
         ->setEntityLabelInSingular('Utilisateur')
-        ->setPageTitle('index', 'Administration des Utilisateurs');
+        ->setPageTitle('index', 'Administration des Utilisateurs')
+        ->setPaginatorPageSize(7);
     }
     
 

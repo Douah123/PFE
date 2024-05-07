@@ -32,7 +32,9 @@ class CandidatureController extends AbstractController
         'offer' => $job,
     ]);
     if ($existingCandidature) {
-        throw $this->createNotFoundException('Vous avez deja postuler a cette offre');
+        $this->addFlash('warning', 'Vous avez deja postulé a cette offre');
+        return $this->redirectToRoute('app_home_page');
+
     }
 
         $candidature = new Candidature();
@@ -47,7 +49,14 @@ class CandidatureController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($candidature);
             $entityManager->flush();
-            return $this->redirectToRoute('confirmation_candidature');
+            $this->addFlash('success', 'Vous avez postulé avec succès.');
+
+            return $this->redirectToRoute('postuler', ['id' => $job->getId()]);
+        }
+        elseif($form->isSubmitted() && !$form->isValid()){
+            $this->addFlash('error', 'Une erreur s\'est produite lors de la tentative de postulation.');
+
+
         }
 
         return $this->render('candidature/postuler.html.twig', [
