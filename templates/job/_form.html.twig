@@ -10,8 +10,28 @@
     <label>Categorie</label><br>
     {{ form_widget(form.category, {'attr': {'class': 'form-control'}}) }}<br><br><br>
     <label>Description</label>
-    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}<br>
+    
+    {{ form_widget(form.description, {'attr': {'class': 'ckeditor'}}) }}<br>
     <label>Ajoutez le logo de votre Entreprise</label>
      {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}<br>
     <button class="btn btn-block" style="border-radius: 5px;">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+
+{% block javascripts %}
+    <script src="{{ asset('ckeditor5-build-classic/ckeditor.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            ClassicEditor
+                .create(document.querySelector('.ckeditor'))
+                .then(editor => {
+                    const form = document.querySelector('form');
+                    form.addEventListener('submit', function(event) {
+                        form.querySelector('.ckeditor').value = editor.getData();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+{% endblock %}

@@ -15,14 +15,15 @@
         {% for flash_error in app.flashes('verify_email_error') %}
             <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
         {% endfor %}
+<div class="register-box">
     <div class="register-form">
         <div class="container">
-            <h1>Register</h1>
+            <h2>Veuillez-vous Inscrire</h2>
 
             {{ form_errors(registrationForm) }}
 
             {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-small'}}) }} <!-- Utilisation de la classe pour limiter la largeur -->
+                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control form-control-small'}}) }} 
                 {{ form_row(registrationForm.firstName, {'attr': {'class': 'form-control form-control-small'}}) }}
                 {{ form_row(registrationForm.lastName, {'attr': {'class': 'form-control form-control-small'}}) }}
                 {{ form_row(registrationForm.plainPassword, {'label': 'Password', 'attr': {'class': 'form-control form-control-small'}}) }}
@@ -30,13 +31,14 @@
                 {{ form_row(registrationForm.agreeTerms) }}
                 <br>
 
-                <button type="submit" class="btn btn-primary btn-block">Register</button>
+                <button type="submit" class="btn btn-block" style="border-radius: 5px;">S'inscrire</button>
             {{ form_end(registrationForm) }}
         </div>
     </div>
-    
+</div>    
 
-    {% block footer %}{% endblock %}
+   <br><br> 
 </body>
+
 </html>
 {% endblock %}

@@ -90,7 +90,13 @@ public function findBySearch(SearchData $SearchData): PaginationInterface {
          // search on location
          $data = $data
          ->orWhere('j.location LIKE :q')
-         ->setParameter('q', "%{$SearchData->q}%");  
+         ->setParameter('q', "%{$SearchData->q}%"); 
+         
+         $data = $data
+        ->innerJoin('j.category', 'c')
+        ->orWhere('c.name LIKE :q')
+        ->setParameter('q', "%{$SearchData->q}%");
+    
     }
 
     $data = $data
@@ -100,5 +106,13 @@ public function findBySearch(SearchData $SearchData): PaginationInterface {
     $job = $this->paginatorInterface->paginate($data, $SearchData->page, 5);
     return $job;
 }
+
+public function countAlljobs(): int
+        {
+            return $this->createQueryBuilder('j')
+            ->select('COUNT(j)')
+            ->getQuery()
+            ->getSingleScalarResult();
+        }
 
 }

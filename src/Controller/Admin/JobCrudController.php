@@ -38,14 +38,14 @@ class JobCrudController extends AbstractCrudController
     {
         return [
             //IdField::new('id'),
-            TextField::new('title'),
-            TextField::new('type'),
-            TextField::new('location'),
-            TextField::new('salary'),
-            AssociationField::new('category'),
-            TextEditorField::new('description')->hideOnIndex(),
-            TextField::new('imageFile')->setFormType(VichImageType::class),
-            ImageField::new('imageName')->setBasePath('/assets/img/')->setLabel('Image')->setUploadDir('/public/images/job')->onlyOnIndex(),
+            TextField::new('title')->setlabel('Titre'),
+            TextField::new('type')->setlabel('Type de contrat'),
+            TextField::new('location')->setlabel('Emplacement'),
+            TextField::new('salary')->setlabel('Salaire'),
+            AssociationField::new('category')->setlabel('Categorie'),
+            TextEditorField::new('description')->hideOnIndex()->setlabel('Description'),
+            TextField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            ImageField::new('imageName')->setBasePath('/assets/img/')->setLabel('Image')->setUploadDir('/public/images/job')->hideOnIndex(),
                             
             //ImageField::new('imageName')->setLabel('Image')->onlyOnIndex(),
             //DateTimeField::new('createdAt')->hideOnIndex()->setFormTypeOption('disabled', 'disabled'),

@@ -1,7 +1,87 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
 {% block content %}
+   <style>
+        .analytics-info {
+            background-color: #0b1c39; 
+            border-radius: 3px; 
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .box-title{
+            color: white;
+        }
+        .fa-solid{
+            color: #fb246a;
+        }
+    </style>  
+    <div >
+    <h2><b>Dashboard</b></h2>
+    <br><br>
+    <div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-12">
+            <div class="white-box analytics-info bg-red rounded-5">
+                <h3 class="box-title">Utilisateurs</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <li class="ms-auto"><span class="counter text-info">{{ userCount }}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="white-box analytics-info bg-gray rounded-5">
+                <h3 class="box-title"> Connectés</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <li class="ms-auto"><span class="counter text-info">{{ loggedInUsersCount }}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="white-box analytics-info bg-gray rounded-5">
+                <h3 class="box-title">Employeurs</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <li class="ms-auto"><span class="counter text-info">12</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <h2><b>Bienvenue dans l'espace Administrateur</b></h2>
-
+    
+     <br> <br> 
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-4 col-md-12">
+            <div class="white-box analytics-info bg-red rounded-5">
+                <h3 class="box-title">Offres</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <li class="ms-auto"><span class="counter text-info">7</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="white-box analytics-info bg-gray rounded-5">
+                <h3 class="box-title">Candidatures</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <li class="ms-auto"><span class="counter text-info">8</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-12">
+            <div class="white-box analytics-info bg-gray rounded-5">
+                <h3 class="box-title">Categories</h3>
+                <ul class="list-inline two-part d-flex align-items-center mb-0">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <li class="ms-auto"><span class="counter text-info">7</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+     
 {% endblock %}

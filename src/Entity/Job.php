@@ -47,7 +47,7 @@ class Job
     #[ORM\ManyToOne(inversedBy: 'job')]
     private ?Category $category = null;
 
-    #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'offer')]
+    #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'offer', cascade: ['remove'])]
     private Collection $candidatures;
 
     #[ORM\ManyToOne(inversedBy: 'job')]

@@ -1,8 +1,16 @@
 {% extends 'Layouts/base.html.twig' %}
-
+ 
 {% block title %}Log in!{% endblock %}
  {% block navbar %}{% endblock %}
 {% block body %}
+{% for type, messages in app.flashes(['success', 'error', 'warning', 'danger']) %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }} text-center mb-0">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}  
+<div class="login-box">
      <div class="login-form">
         <form method="post" class="container">
             {% if error %}
@@ -15,23 +23,26 @@
                 </div>
             {% endif %}
 
-            <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Veuillez-vous connecter</h1>
             <label for="inputEmail">Email</label>
             <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-            <label for="inputPassword">Password</label>
+            <label for="inputPassword">Mot de passe</label>
             <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required> 
             
 
             <input type="hidden" name="_csrf_token"
                 value="{{ csrf_token('authenticate') }}"
             >
-            <a href="{{path('app_forgot_password_request')}}" style="color: black;">Mot de passe oublié ?</a>  <a href="{{path('app_register')}}" style="color: black;">Créez un compte ?</a>
+            <a href="" style="color: black;">Mot de passe oublié ?</a>  <a href="{{path('app_register')}}" style="color: black;"> Pas de compte ?</a>
             </br></br>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">
-                Sign in
+            <button class="btn btn-block" type="submit" style="border-radius:5px;">
+                Connexion
             </button>
             
         </form>
     </div>
+</div>
+<br><br><br>
+
 {% endblock %}
-{% block footer %}{% endblock %}
+

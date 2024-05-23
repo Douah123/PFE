@@ -1,12 +1,13 @@
 <!-- Preloader Start -->
-{% for type, messages in app.flashes(['succes', 'error', 'warning']) %}
+{% for type, messages in app.flashes(['success', 'error', 'warning']) %}
     {% for message in messages %}
         <div class="alert alert-{{ type }} text-center mb-0">
             {{ message }}
         </div>
     {% endfor %}
 {% endfor %} 
-    <header>
+    <header style="border: 1px solid #ccc;">
+    <div class="container">
         <div id="preloader-active">
             <div class="preloader d-flex align-items-center justify-content-center">
                 <div class="preloader-inner position-relative">
@@ -52,16 +53,42 @@
                                                     {% set user = app.user %}
                                                     {% if not user or  user.getEmployeur() %}
                                                        
-                                                        <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
-                                                            <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
-                                                        </a>
+                                                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu" style="margin-right: 100px !important;" > 
+                                                            <li class="nav-item dropdown">
+                                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <div class="profile-pic">
+                                                                    <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile Picture">
+                                                                </div>
+                                                            
+                                                            </a>
+                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                                
+                                                                <li><a class="dropdown-item" href="{{ path('employer_edit', {'id': app.user.employeur.id}) }}"><i class="fas fa-cog fa-fw"></i>Profile Employeur</a></li>
+                                                                <li><hr class="dropdown-divider"></li>
+                                                                <li><a class="dropdown-item" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt fa-fw"></i> Deconnexion</a></li>
+                                                            </ul>
+                                                        </ul>
                                                         
                                                         <a href="{{path('app_job_new')}}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Publier une offre</a>
                                                     {% else %}
                                                         
-                                                        <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
-                                                            <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
-                                                        </a>
+                                                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu"> 
+                                                            <li class="nav-item dropdown">
+                                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                <div class="profile-pic">
+                                                                    <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile Picture">
+                                                                </div>
+                                                            <!-- You can also use icon as follows: -->
+                                                            <!--  <i class="fas fa-user"></i> -->
+                                                            </a>
+                                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                               {% if app.user and app.user.employeur %}
+                                                                <li><a class="dropdown-item" href="{{ path('employer_edit', {'id': app.user.employeur.id}) }}"><i class="fas fa-cog fa-fw"></i> Settings</a></li>
+                                                               {% endif %}
+                                                                <li><hr class="dropdown-divider"></li>
+                                                                <li><a class="dropdown-item" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt fa-fw"></i> Log Out</a></li>
+                                                            </ul>
+                                                        </ul>
                                                         
                                                        <a href="{{ path('app_employeur') }}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Créer un compte</a>
                                                     {% endif %}
@@ -83,5 +110,5 @@
                     </div>
             </div>
         </div>
-            <!-- Header End -->
+    </div>    <!-- Header End -->
     </header>

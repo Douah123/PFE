@@ -60,7 +60,7 @@
                                 <div class="small-section-tittle">
                                     <h4>Job Description</h4>
                                 </div>
-                                <p>{{ jobDetail.description }}</p>
+                                <p>{{ jobDetail.description|striptags }}</p>
                             </div>
                         
                         </div>
@@ -104,4 +104,3 @@
         </div>
         <!-- job post company End -->
 {% endblock %}
-{% block footer %}{% endblock %}

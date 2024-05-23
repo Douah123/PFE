@@ -22,7 +22,7 @@ class CategoryCrudController extends AbstractCrudController
         ->setEntityLabelInPlural('Categories')
         ->setEntityLabelInSingular('Categorie')
         ->setPageTitle('index', 'Administration des Categories')
-        ->setPaginatorPageSize(3);
+        ->setPaginatorPageSize(7);
     }
 
     

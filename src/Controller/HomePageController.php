@@ -12,17 +12,23 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\JobRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
+Use App\Repository\UserRepository;
 
 
 
 class HomePageController extends AbstractController
 {
     #[Route('/', name: 'app_home_page')]
-    public function index(jobRepository $jobRepository, Request $request, PaginatorInterface $paginatorInterface): Response
+    public function index(UserRepository $userRepository, jobRepository $jobRepository, Request $request, PaginatorInterface $paginatorInterface): Response
     {  
-       
+       $userCount = $userRepository->countAllUsers();
        $SearchData = New SearchData();
+       //$currentPage = $request->query->getInt('page', 1);
+    
+        //$previousPage = max(1, $currentPage - 1);
       
        $form = $this->createForm(SearchType::class, $SearchData);
        $form->handleRequest($request);
@@ -34,6 +40,7 @@ class HomePageController extends AbstractController
            return $this->render('home_page/index.html.twig', [
             'form'=>$form->createview(),
             'job'=> $job, 
+            //'previous' => $previousPage,
              
         ]);
 
@@ -41,6 +48,7 @@ class HomePageController extends AbstractController
         return $this->render('home_page/index.html.twig', [
             'form'=>$form->createview(),
             'job'=> $jobRepository->findPublished($request->query->getInt('page', 1)), 
+            'userCount' => $userCount,
         ]);
 
     }
@@ -86,5 +94,20 @@ class HomePageController extends AbstractController
         return $this->render('home_page/afficherCandidatures.html.twig', [
             'candidatures' => $candidatures,
         ]);
+    }
+
+     #[Route('/test-email', name: 'test_email')]
+    public function sendTestEmail(MailerInterface $mailer): Response
+    {
+        $email = (new Email())
+            ->from('jobFinder@gmail.com')
+            ->to('dominique.garnier@hotmail.fr')  // Remplacez par votre e-mail
+            ->subject('Test Email')
+            ->text('This is a test email.')
+            ->html('<p>This is a test email.</p>');
+
+        $mailer->send($email);
+
+        return new Response('Email sent');
     }
 }

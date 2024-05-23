@@ -29,8 +29,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-tittle text-center">
-                            <span>Recent Job</span>
-                            <h2>Featured Jobs</h2>
+                            <span>Liste des Offres </span>
+                            <h2>Parcourez</h2>
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                                 <div class="job-items">
                                     <div class="company-img" style="border-radius: 10px;">
                                         {% if job.imageName is defined and job.imageName is not empty %}
-                                            <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><img src="{{ vich_uploader_asset(job, 'imageFile') }}" alt=""></a>
+                                            <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><img src="{{ vich_uploader_asset(job, 'imageFile') }}" alt="" style="border: 1px solid #ccc;"></a>
                                         {% else %}
                                             <a href="{{ path('app_job_detail', { 'id': job.id }) }}"></a>
                                         {% endif %}
@@ -51,7 +51,7 @@
                                     <div class="job-tittle">
                                         <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><h4>{{ job.title }}</h4></a>
                                         <ul>
-                                            <li>>{{ job.category }}</li>
+                                            <li>>{{ job.category|striptags }}</li>
                                             <li><i class="fas fa-map-marker-alt"></i>{{ job.location }}</li>
                                             <li>{{ job.salary }}</li>
                                         </ul>
@@ -67,23 +67,9 @@
                 </div>
             </div>
         </section>
-        <!-- Featured_job_end -->
-        <!--Pagination Start  -->
-        <div class="pagination-area pb-115 text-center">
-    <div class="container">
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="single-wrap d-flex justify-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-start">
-                            {{ knp_pagination_render(job) }}
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        
+       
+        {{ knp_pagination_render(job, 'layouts/partials/pagination.html.twig') }}
 
 
 

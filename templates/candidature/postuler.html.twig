@@ -1,16 +1,7 @@
 {% extends 'Layouts/base.html.twig' %}
 {% block title %}{% endblock %}
-
 {% block body %}
-{% for label, messages in app.flashes %}
-    {% for message in messages %}
-        <div class="alert alert-{{ label }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
-
-    <h1>Postuler pour cette offre</h1>
+   <div class="cat"><h2 class="text-center">Postuler à cette offre</h2></div>
   
     <div class="candidature-form">
         <div class="col-md-6 offset-md-3">
@@ -24,7 +15,7 @@
             {{ form_widget(form.imageFileLettreMotivation, {'attr': {'class': 'form-control-file'}}) }}
             <label>Ajoutez votre CV</label>
             {{ form_widget(form.imageFileCV, {'attr': {'class': 'form-control-file'}}) }}<br>
-            <button type="submit" class="btn btn-primary" style="border-radius: 5px;">Soumettre</button><br>
+            <button type="submit" class="btn btn-block" style="border-radius: 5px;">Soumettre</button><br>
             {{ form_end(form) }}
             <br>
         </div>

@@ -9,10 +9,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\UserType;
 use App\Entity\User;
+Use App\Repository\UserRepository;
 use App\Form\UserPasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class UserController extends AbstractController
+
 {
     #[Route('/editProfile/{id}', name: 'user_edit', methods: ['GET', 'POST'])]
     public function index(User $user, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
@@ -24,7 +27,8 @@ class UserController extends AbstractController
         }
         if ($this->getUser() !== $user) {
            
-            return $this->redirectToRoute('listes_jobs');
+            throw new AccessDeniedException('Vous n\'êtes pas autorisé à modifier ce profil.');
+    
         }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -77,6 +81,16 @@ class UserController extends AbstractController
         return $this->render('user/edit_password.html.twig', [
             'form' => $form->createview(),
            
+        ]);
+    }
+
+    #[Route('/dashboard', name: 'dashboard')]
+    public function dashboard(UserRepository $userRepository): Response
+    {
+        $userCount = $userRepository->countAllUsers();
+        
+        return $this->render('homepage/index.html.twig', [
+            'userCount' => $userCount,
         ]);
     }
 

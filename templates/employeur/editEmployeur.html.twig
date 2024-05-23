@@ -1,0 +1,71 @@
+{% extends 'Layouts/base2.html.twig' %}
+
+
+
+{% block body %}
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold">{{ employeur.name }}</span><span class="text-black-50">{{ employeur.email }}</span><span> </span></div>
+        </div>
+        <div class="col-md-6 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Paramètres profil Employeur</h4>
+                </div>
+                {{ form_start(form) }}
+                <div class="row mt-3">
+                    <label>Nom </label>
+                    {{ form_widget(form.name, {'attr': {'class': 'form-control col-md-12'}}) }}
+                    <label>Secteur</label>
+                    {{ form_widget(form.sector, {'attr': {'class': 'form-control col-md-12'}}) }}
+                
+                
+                   <label>Email </label>
+                   {{ form_widget(form.email, {'attr': {'class': 'form-control col-md-12'}}) }}
+                    <label>Adress </label>
+                   {{ form_widget(form.adress, {'attr': {'class': 'form-control col-md-12'}}) }}
+                    <label>Phone Number </label>
+                   {{ form_widget(form.phone, {'attr': {'class': 'form-control col-md-12'}}) }}
+                   
+                    
+                
+                    <label>Description</label>
+                   {{ form_widget(form.description, {'attr': {'class': 'ckeditor'}}) }}
+                   
+                
+                    <label>Veuillez entrer votre mot de passe </label>
+                   {{ form_widget(form.plainPassword, {'attr': {'class': 'form-control  col-md-12'}}) }}
+                </div>
+                
+                
+                   {{ form_widget(form.submit, {'attr': {'class': 'form-control btn btn-block mt-5 text-center', 'style': 'border-radius: 5px;'}}) }}
+                
+            </div>
+            {{ form_end(form) }}
+        </div>
+       
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('ckeditor5-build-classic/ckeditor.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            ClassicEditor
+                .create(document.querySelector('.ckeditor'))
+                .then(editor => {
+                    const form = document.querySelector('form');
+                    form.addEventListener('submit', function(event) {
+                        form.querySelector('.ckeditor').value = editor.getData();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+{% endblock %}

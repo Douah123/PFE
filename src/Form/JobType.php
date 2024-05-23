@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 
 class JobType extends AbstractType
 {
@@ -30,7 +32,9 @@ class JobType extends AbstractType
             ->add('location')
             ->add('salary')
             ->add('category')
-            ->add('description')
+            ->add('description', TextareaType::class, [
+                'attr' => ['class' => 'ckeditor'],
+            ])
             ->add('imageFile', VichImageType::class,)
             #->add('createdAt')
             #->add('updatedAt')

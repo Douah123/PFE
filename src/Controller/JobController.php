@@ -14,6 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\StatusCandidatureType;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+
+
 
 #[Route('/job')]
 class JobController extends AbstractController
@@ -87,13 +91,13 @@ class JobController extends AbstractController
     }
 
     #[Route('/job/{id}/accept/{candidatureId}', name: 'accept_candidature', methods: ['POST'])]
-    public function acceptCandidature(Request $request, $id, Job $job, $candidatureId, EntityManagerInterface $entityManager): Response
+    public function acceptCandidature(Request $request, $id, Job $job, $candidatureId, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         
 
         // Récupérer la candidature à accepter
         $candidature = $entityManager->getRepository(Candidature::class)->find($candidatureId,);
-        //dd(candidature); die;
+        
         if (!$candidature) {
             throw $this->createNotFoundException('La candidature n\'existe pas.');
         }
@@ -102,6 +106,20 @@ class JobController extends AbstractController
         
             $entityManager->persist($candidature);
             $entityManager->flush();
+
+            $user = $candidature->getUser(); // Utilisation de la méthode getUser
+
+        // Envoyer un email à l'utilisateur candidat
+        $email = (new Email())
+        ->from('jobfinder@gmail.com')
+        ->to($user->getEmail())
+        ->subject('Mise à jour de votre candidature')
+        ->text('Votre candidature pour le poste de ' . $job->getTitle() . ' a été acceptée.')
+        ->html('<p>Votre candidature pour le poste de <strong>' . $job->getTitle() . '</strong> a été acceptée.</p>');
+
+        $mailer->send($email);
+        
+            //dd($email); die;
             // Créer le formulaire pour le statut de la candidature
             $statusForm = $this->createForm(StatusCandidatureType::class, null, [
                 'action' => $this->generateUrl('accept_candidature', ['id' => $job->getId(), 'candidatureId' => $candidature->getId()]),
@@ -124,12 +142,14 @@ class JobController extends AbstractController
         // Mettre à jour le statut de la candidature à "Acceptée"
                
                 $candidature->setStatus('Acceptée');
+
+                
             }
                 $entityManager->persist($candidature);
                 $entityManager->flush();
 
                 // Rediriger vers la page d'affichage de l'offre
-                return $this->redirectToRoute('app_job_show', ['id' => $id]);
+                return $this->redirectToRoute('app_job_index');
             }
         }
         return $this->render('job/show.html.twig', [
@@ -178,7 +198,7 @@ class JobController extends AbstractController
                 $entityManager->flush();
         
                 // Rediriger vers la page d'affichage de l'offre
-                return $this->redirectToRoute('app_job_show', ['id' => $id]);
+                return $this->redirectToRoute('app_job_index');
             }
         }
         return $this->render('job/show.html.twig', [
@@ -211,7 +231,19 @@ class JobController extends AbstractController
     #[Route('/{id}', name: 'app_job_delete', methods: ['POST'])]
     public function delete(Request $request, Job $job, EntityManagerInterface $entityManager): Response
     {
+        // Vérifie si le jeton CSRF est valide
         if ($this->isCsrfTokenValid('delete'.$job->getId(), $request->request->get('_token'))) {
+            // Vérifie s'il existe des candidatures liées à ce job
+            $candidatures = $job->getCandidatures();
+
+            if (!empty($candidatures)) {
+                // Supprime les candidatures liées
+                foreach ($candidatures as $candidature) {
+                    $entityManager->remove($candidature);
+                }
+            }
+
+            // Supprime le job
             $entityManager->remove($job);
             $entityManager->flush();
         }

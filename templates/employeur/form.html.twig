@@ -3,22 +3,40 @@
 
 
 {% block body %}
-
-    <h1 style="margin-left: auto;">Veuillez vous Inscrire</h1>
+<br><br>
+ <div class="emplInsc-box">   
     <div class="row">
-        <div class="col-md-6 offset-md-3">
+        <div class="col-md-9"style="margin-left: 90px;">
+        <br>
+        <h2>Informations de votre Entreprise</h2>
            {{ form_start(form) }}
-            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
-            {{ form_row(form.sector, {'attr': {'class': 'form-control'}}) }}
-            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
-            {{ form_row(form.adress, {'attr': {'class': 'form-control'}}) }}
-            {{ form_row(form.phone, {'attr': {'class': 'form-control'}}) }}
-            {{ form_row(form.description, {'attr': {'class': 'form-control'}}) }}<br>
-            <button type="submit" class="btn btn-primary" style="border-radius: 5px;">Soumettre</button>
+            <label>Nom</label>
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            <label>Secteur </label>
+            {{ form_widget(form.sector, {'attr': {'class': 'form-control'}}) }}
+            <label>Email </label>
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+            <label>Adresse </label>
+            {{ form_widget(form.adress, {'attr': {'class': 'form-control'}}) }}
+            <label>Telephone </label>
+            {{ form_widget(form.phone, {'attr': {'class': 'form-control'}}) }}
+            <label>Description </label>
+            <div id="employer"></div>
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}<br>
+            <button type="submit" class="btn btn-block" style="border-radius: 5px;">Soumettre</button>
             
             {{ form_end(form) }}
             <br><br>
 
         </div>
     </div>
+</div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('ckeditor5-build-balloon/ckeditor.js') }}"></script>
+    <script src="{{ asset('assets/js/ckeditor.js') }}"></script>
+{% endblock %}
+
+
+

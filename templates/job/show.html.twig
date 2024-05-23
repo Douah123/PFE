@@ -4,16 +4,15 @@
 
 {% block body %}
     <title>Job</title>
-    <h1>Job</h1>
- 
+ <div class="cat"><h2 class="text-center">Informations de l'offre</h2></div>   
+ <br><br><br>
     <div class="row">
         <div class="col-md-8 mx-auto">
+                
+            
             <table class="table table-bordered">
                 <tbody>
-                    <tr>
-                        <th>Id</th>
-                        <td>{{ job.id }}</td>
-                    </tr>
+                    
                     <tr>
                         <th>Title</th>
                         <td>{{ job.title }}</td>
@@ -24,7 +23,7 @@
                     </tr>
                     <tr>
                         <th>Description</th>
-                        <td>{{ job.description }}</td>
+                        <td>{{ job.description|striptags }}</td>
                     </tr>
                     <tr>
                         <th>Location</th>
@@ -76,14 +75,14 @@
                         <td>{{ candidature.Ville }}</td>
                         <td>
                             {% if candidature.LettreMotivation %}
-                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download><button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
+                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" style="color: #0b1c39;" download><b>Télecharger</b></button></a></p>
                             {% else %}
                                 <p>Pas de lettre de motivation téléchargée</p>
                             {% endif %}
                         </td>
                         <td>
                             {% if candidature.CV %}
-                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download><button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
+                                <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" style="color: #0b1c39;" download><b>Télecharger</b></a></p>
                             {% else %}
                                 <p>Pas de CV téléchargé</p>
                             {% endif %}
@@ -92,12 +91,42 @@
                             {% if candidature.status == 'En attente' %}
                                 <form action="{{ path('accept_candidature', {'id': job.id, 'candidatureId': candidature.id}) }}" method="post">
                                     
-                                    <button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;" type="submit">Accepter</button>
+                                    <button class="btn" style=" padding: 20px 20px; border-radius: 5px; background-color: #0b1c39;" type="submit" onclick="return confirmAccept()">Accept</button>
+                                    <script>
+                                        function confirmAccept() {
+                                            // Afficher une boîte de dialogue de confirmation
+                                            var confirmation = confirm('Voulez-vous vraiment accepter cette candidature ?');
+
+                                            // Si l'utilisateur clique sur "OK" dans la boîte de dialogue
+                                            if (confirmation) {
+                                                // Soumettre le formulaire
+                                                return true;
+                                            } else {
+                                                // Annuler l'action par défaut du formulaire
+                                                return false;
+                                            }
+                                        }
+                                    </script>
                                 </form>
                                 <br>
                                 <form action="{{ path('refuse_candidature', {'id': job.id, 'candidatureId': candidature.id}) }}" method="post">
                                     
-                                    <button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px; " type="submit">Refuser</button>
+                                    <button class="btn " style=" padding: 20px 20px; border-radius: 5px; background-color: #0b1c39;" type="submit" onclick="return confirmAccept()">Refuse</button>
+                                    <script>
+                                        function confirmAccept() {
+                                            // Afficher une boîte de dialogue de confirmation
+                                            var confirmation = confirm('Voulez-vous vraiment refuser cette candidature ?');
+
+                                            // Si l'utilisateur clique sur "OK" dans la boîte de dialogue
+                                            if (confirmation) {
+                                                // Soumettre le formulaire
+                                                return true;
+                                            } else {
+                                                // Annuler l'action par défaut du formulaire
+                                                return false;
+                                            }
+                                        }
+                                    </script>
                                 </form>
                             {% else %}
                                 <p>Statut: {{ candidature.status }}</p>

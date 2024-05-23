@@ -34,13 +34,13 @@ class Candidature
     private ?string $Ville = null;
 
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $LettreMotivation = null;
 
     #[Vich\UploadableField(mapping: 'candidature_image', fileNameProperty: 'LettreMotivation')]
     private ?File $imageFileLettreMotivation = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $CV = null;
 
     #[Vich\UploadableField(mapping: 'candidature_image', fileNameProperty: 'CV')]

@@ -2,15 +2,17 @@
 
 
 {% block body %}
+<title>Job index</title>
+<div class="cat"><h2 class="text-center">Mes Offres</h2></div>
 <div class="indexjob " style="font-size: small;">
- <title>Job index</title>
+ 
 
-  <h1>Job index</h1>
+
 
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Titre</th>
                 <th>Type</th>
                 <th>Description</th>
@@ -26,10 +28,10 @@
         <tbody>
         {% for job in jobs %}
             <tr>
-                <td>{{ job.id }}</td>
+                
                 <td>{{ job.title }}</td>
                 <td>{{ job.type }}</td>
-                <td>{{ job.description|slice(0,10) }}...</td>
+                <td>{{ job.description|slice(0,10)|striptags }}...</td>
                 <td>{{ job.location }}</td>
                 <td>{{ job.salary }}</td>
                 <td>{{ job.imageName|slice(0,5) }}</td>
@@ -37,8 +39,8 @@
                 <td>{{ job.updatedAt ? job.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ job.expiresAt ? job.expiresAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_job_show', {'id': job.id}) }}"><button class="btn btn-sm" style=" padding: 20px 20px; border-radius: 5px;">Consulter</button></a><br><br>
-                    <a href="{{ path('app_job_edit', {'id': job.id}) }}"><button class="btn head-btn2" style=" padding: 20px 20px; border-radius: 5px;">Modifier</button ></a><br>
+                    <a href="{{ path('app_job_show', {'id': job.id}) }}"><button class="btn" style=" padding: 20px 20px; border-radius: 5px; background-color: #0b1c39;">Consult</button></a><br><br>
+                    <a href="{{ path('app_job_edit', {'id': job.id}) }}"><button class="btn" style=" padding: 20px 20px; border-radius: 5px; background-color: #0b1c39;">Modifie</button ></a><br>
 
                 </td>
             </tr>
@@ -50,7 +52,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_job_new') }}"><button class="btn" style="border-radius: 5px;">Ajouter une offre</button</a>
+    <a href="{{ path('app_job_new') }}"><button class="btn head-btn1" style="border-radius: 5px;">Ajouter une offre</button</a>
 </div>      
 
 {% endblock %}

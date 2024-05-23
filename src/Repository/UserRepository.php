@@ -63,4 +63,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
+        public function countAllUsers(): int
+        {
+            return $this->createQueryBuilder('u')
+            ->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+        }
+       
+        public function countLoggedInUsers(): int
+        {
+            
+            $recentLoginThreshold = new \DateTime('-10 minutes');
+            
+            return $this->createQueryBuilder('u')
+                ->select('COUNT(u)')
+                ->where('u.lastLogin >= :recentLoginThreshold')
+                ->setParameter('recentLoginThreshold', $recentLoginThreshold)
+                ->getQuery()
+                ->getSingleScalarResult();
+        }
 }

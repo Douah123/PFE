@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\IsGranted;
 use App\Entity\User;
+Use App\Repository\UserRepository;
 
 
 
@@ -17,6 +18,12 @@ use App\Entity\User;
 
 class DashboardController extends AbstractDashboardController
 {
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     #[Route('/admin', name: 'admin_index')]
     #[IsGranted('ROLE_ADMIN')]
     public function index(): Response
@@ -25,25 +32,35 @@ class DashboardController extends AbstractDashboardController
            
             return $this->redirectToRoute('app_login');
         }
-        
-         return $this->render('admin/dashboard.html.twig');
+        $userCount = $this->userRepository->countAllUsers();
+        $loggedInUsersCount = $this->userRepository->countLoggedInUsers();
+        return $this->render('admin/dashboard.html.twig', [
+            'userCount' => $userCount,
+            'loggedInUsersCount' => $loggedInUsersCount,
+        ]);
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('JobFinder-Administration');
+           
             
-            
+        ->setTitle('<img src="/assets/img/logo/logo3.png" >');
+
             
     }
    
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Gérer utilisateurs', 'fa-solid fa-user', User::class)->setController(UserCrudController::class);
-        yield MenuItem::linkToCrud('Gérer Offres', 'fa-solid fa-briefcase', Job::class)->setController(JobCrudController::class);
-        yield MenuItem::linkToCrud('Gérer Categories', 'fa-solid fa-layer-group', Job::class)->setController(CategoryCrudController::class);
+        
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home')->setCssClass('mb-3');
+        yield MenuItem::linkToCrud('Gérer utilisateurs', 'fa-solid fa-user', User::class)->setController(UserCrudController::class)->setCssClass('mb-3');
+        yield MenuItem::linkToCrud('Gérer Offres', 'fa-solid fa-briefcase', Job::class)->setController(JobCrudController::class)->setCssClass('mb-3');
+        yield MenuItem::linkToCrud('Gérer Categories', 'fa-solid fa-layer-group', Job::class)->setController(CategoryCrudController::class)->setCssClass('mb-3');
+        yield MenuItem::linkToRoute('Retourner au site', 'fa-solid fa-right-from-bracket', 'app_home_page');
+        
     }
+
+    
 }

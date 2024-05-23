@@ -8,7 +8,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Employeur;
+use App\Form\EmployeurEditType;
 use App\Form\EmployeurType;
+use App\Entity\User;
+use App\Entity\Job;
+use App\Repository\JobRepository;
+use App\Form\UserPasswordType;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class EmployeurController extends AbstractController
 {
@@ -26,7 +33,7 @@ class EmployeurController extends AbstractController
        
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Récupérer l'utilisateur actuel
+           
             $user = $this->getUser();
             
             // Associer l'utilisateur à l'employeur
@@ -53,4 +60,48 @@ class EmployeurController extends AbstractController
     
         return $this->render('employeur/index.html.twig');
     }
+
+    #[Route('/editProfileEmployer/{id}', name: 'employer_edit', methods: ['GET', 'POST'])]
+    public function index(int $id, Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $hasher): Response
+    {
+    $user = $this->getUser();
+    if (!$user) {
+        return $this->redirectToRoute('app_login');
+    }
+
+    $employeur = $entityManager->getRepository(Employeur::class)->find($id);
+   
+    if (!$employeur || $employeur->getUser() !== $user) {
+        return $this->redirectToRoute('listes_jobs');
+    }
+
+    // Récupération du job publié par cet employeur
+    $job = $employeur->getJob(); // Supposons que vous ayez une méthode getJob() dans votre entité Employeur qui renvoie l'entité Job associée
+
+    $form = $this->createForm(EmployeurEditType::class, $employeur);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $plainPassword = $form->get('plainPassword')->getData();
+        if (!$hasher->isPasswordValid($user, $plainPassword)) {
+            $this->addFlash('error', 'Mot de passe incorrect.');
+            return $this->redirectToRoute('employer_edit', ['id' => $id]);
+        }
+
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Profil employeur mis à jour avec succès.');
+        return $this->redirectToRoute('accueil_employeur');
+    }
+
+    return $this->render('employeur/editEmployeur.html.twig', [
+        'form' => $form->createView(),
+        'employeur' => $employeur,
+        'user' => $user,
+        'job' => $job,
+    ]);
+}
+
+
+
 }

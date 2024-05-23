@@ -4,7 +4,7 @@
 
 {% block body %}
  
-   <h2>Candidatures</h2>
+   <div class="cat"><h2 class="text-center">Mes candidatures</h2></div><br><br><br>
    <div class="container">
         <table class="table table-bordered">
             <tr style="border-bottom: 1px solid #ccc;">
@@ -37,14 +37,14 @@
                     </td>
                     <td>
                         {% if candidature.LettreMotivation %}
-                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download><button class="btn btn-sm" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
+                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileLettreMotivation') }}" download style=" color: #0b1c39;"><b>Télecharger</b></button></a></p>
                         {% else %}
                             <p>Pas de lettre de motivation téléchargée</p>
                         {% endif %}
                     </td>
                     <td>
                         {% if candidature.CV %}
-                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download><button class="btn btn-sm" style=" padding: 20px 20px; border-radius: 5px;">Télecharger</button></a></p>
+                            <p><a href="{{ vich_uploader_asset(candidature, 'imageFileCV') }}" download style=" color: #0b1c39;"><b>Télecharger</b></button></a></p>
                         {% else %}
                             <p>Pas de CV téléchargé</p>
                         {% endif %}
@@ -60,5 +60,5 @@
             {% endfor %}
         </table>
      </div>
-
+<br><br><br>
 {% endblock %}

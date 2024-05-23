@@ -1,13 +1,12 @@
-    <!-- Preloader Start -->
 
-{% for type, messages in app.flashes(['succes', 'error', 'warning']) %}
+{% for type, messages in app.flashes(['success', 'error', 'warning']) %}
     {% for message in messages %}
         <div class="alert alert-{{ type }} text-center mb-0">
             {{ message }}
         </div>
     {% endfor %}
 {% endfor %}   
-    <header>
+<header style="border: 1px solid #ccc;">
     <div class="container">
         <div id="preloader-active">
             <div class="preloader d-flex align-items-center justify-content-center">
@@ -19,15 +18,15 @@
                 </div>
             </div>
         </div>
-        <!-- Preloader Start -->
-        <header>
-            <!-- Header Start -->
+        
+        
+           
         <div class="header-area header-transparrent">
             <div class="headder-top header-sticky">
                     <div class="container">
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-md-2">
-                                <!-- Logo -->
+                               
                                 <div class="logo">
                                     <img src="{{ asset('assets/img/logo/logo3.png') }}" alt="">
                                 </div>
@@ -35,38 +34,57 @@
                             </div>
                             <div class="col-lg-9 col-md-9">
                                 <div class="menu-wrapper">
-                                    <!-- Main-menu -->
+                                    
                                     <div class="main-menu ">
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
-                                                <li><a href="index.html">Accueil</a></li>
+                                                <li><a href="{{ path('app_home_page') }}">Accueil</a></li>
                                                 <li><a href="{{ path('afficher_candidatures') }}">Mes candidatures</a></li>
                                                 <li><a href="">A propos</a></li>
-                                                
                                                 <li><a href="contact.html">Contact</a></li>
+                                                <!-- Ajoutez une classe spécifique au lien pour les petits écrans -->
+                                                <li class="d-md-none">
+                                                    <a href="{{ path('accueil_employeur') }}">Passer à employeur</a>
+                                                </li>
+
                                             </ul>
                                         </nav>
-                                    </div>          
-                                    <!-- Header-btn -->
+                                    </div>      
+                                   
                                         <div class="header-btn d-none f-right d-lg-block">
                                             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                                                {# Si l'utilisateur est connecté, afficher l'icône de profil #}
-                                               
-                                                    <a href="" class="profile-icon" alt="profile" title="Cliquez pour voir votre profil">
-                                                        <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile" class="profile-image" style="width: 40px; height: 40px; margin-right: 60px;">
-                                                    </a>
                                                 
+                                                
+                                                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu"> 
+                                                        <li class="nav-item dropdown">
+                                                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <div class="profile-pic">
+                                                                <img src="{{ asset('assets/img/icon/profile-user.png') }}" alt="Profile Picture">
+                                                            </div>
+                                                        
+                                                        </a>
+                                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                            <li><a class="dropdown-item" href="{{ path('user_edit', {'id': app.user.id}) }}"><i class="fas fa-cog fa-fw"></i>Paramètres profile</a></li>
+                                                            <li><a class="dropdown-item" href="{{ path('password_edit', {'id': app.user.id}) }}"><i class="fas fa-lock"></i> Changer mot de passe</a></li>
+                                                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                                                                <li><a class="dropdown-item" href="{{ path('admin_index') }}"><i class="fas fa-sign-in-alt fa-fw"></i> Administration</a></li>
+                                                            {% endif %}
+                                                            <li><hr class="dropdown-divider"></li>
+                                                            <li><a class="dropdown-item" href="{{path('app_logout')}}"><i class="fas fa-sign-out-alt fa-fw"></i> Deconnexion</a></li>
+                                                        </ul>
+                                                    </ul>
                                             {% else %}
-                                                {# Sinon, afficher le bouton de connexion #}
+                                                
                                                 <a href="{{ path('app_login') }}" class="btn head-btn2" style="border-radius: 5px; padding: 20px 20px;">Se Connecter</a>
                                             {% endif %}
+                                       
                                             <a href="{{path('accueil_employeur')}}" class="btn head-btn1" style="border-radius: 5px; padding: 20px 20px;">Passer à Employeur</a>
         
                                         </div>
 
                                 </div>
                             </div>
-                            <!-- Mobile Menu -->
+                           
                             <div class="col-12">
                                 <div class="mobile_menu d-block d-lg-none"></div>
                             </div>
@@ -74,6 +92,5 @@
                     </div>
             </div>
         </div>
-    </div>
-            <!-- Header End -->
-    </header>
+    </div>    
+</header>
