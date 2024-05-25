@@ -45,4 +45,11 @@ class CategoryRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function countAllCats(): int
+            {
+                return $this->createQueryBuilder('c')
+                ->select('COUNT(c.id)')
+                ->getQuery()
+                ->getSingleScalarResult();
+            }
 }

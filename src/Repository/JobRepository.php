@@ -110,7 +110,7 @@ public function findBySearch(SearchData $SearchData): PaginationInterface {
 public function countAlljobs(): int
         {
             return $this->createQueryBuilder('j')
-            ->select('COUNT(j)')
+            ->select('COUNT(j.id)')
             ->getQuery()
             ->getSingleScalarResult();
         }

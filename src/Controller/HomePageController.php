@@ -14,6 +14,7 @@ use App\Repository\JobRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 Use App\Repository\UserRepository;
 
@@ -105,9 +106,16 @@ class HomePageController extends AbstractController
             ->subject('Test Email')
             ->text('This is a test email.')
             ->html('<p>This is a test email.</p>');
-
-        $mailer->send($email);
-
-        return new Response('Email sent');
+            try {
+                $mailer->send($email);
+                return new Response('Email sent');
+            } catch (TransportExceptionInterface $e) {
+                // Log the error or handle it as needed
+                // For example, you could log the error message
+                error_log('Email sending failed: ' . $e->getMessage());
+            
+                // Return a response indicating the failure
+                return new Response('Failed to send email: ' . $e->getMessage());
+            }
     }
 }

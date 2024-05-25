@@ -9,7 +9,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\IsGranted;
 use App\Entity\User;
+use App\Entity\Job;
 Use App\Repository\UserRepository;
+Use App\Repository\JobRepository;
+Use App\Repository\CandidatureRepository;
+Use App\Repository\CategoryRepository;
+Use App\Repository\EmployeurRepository;
 
 
 
@@ -19,11 +24,24 @@ Use App\Repository\UserRepository;
 class DashboardController extends AbstractDashboardController
 {
     private $userRepository;
+    private $jobRepository;
+    private $candidatureRepository;
+    private $employeurRepository;
+    private $categoryRepository;
+    private $flashMessageService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, JobRepository $jobRepository, CandidatureRepository $candidatureRepository, EmployeurRepository $employeurRepository, CategoryRepository $categoryRepository)
     {
         $this->userRepository = $userRepository;
+        $this->jobRepository = $jobRepository;
+        $this->employeurRepository = $employeurRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->candidatureRepository = $candidatureRepository;
+        
     }
+    
+
+    
     #[Route('/admin', name: 'admin_index')]
     #[IsGranted('ROLE_ADMIN')]
     public function index(): Response
@@ -33,9 +51,17 @@ class DashboardController extends AbstractDashboardController
             return $this->redirectToRoute('app_login');
         }
         $userCount = $this->userRepository->countAllUsers();
+        $jobCount = $this->jobRepository->countAllJobs();
+        $candCount = $this->candidatureRepository->countAllCands();
         $loggedInUsersCount = $this->userRepository->countLoggedInUsers();
+        $empCount = $this->employeurRepository->countAllEmps();
+        $catCount = $this->categoryRepository->countAllCats();
         return $this->render('admin/dashboard.html.twig', [
             'userCount' => $userCount,
+            'jobCount' => $jobCount,
+            'candCount' => $candCount,
+            'empCount' => $empCount,
+            'catCount' => $catCount,
             'loggedInUsersCount' => $loggedInUsersCount,
         ]);
     }

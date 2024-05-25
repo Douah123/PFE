@@ -22,4 +22,19 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+    App\EventListener\LoginListener:
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
+
+    App\EventSubscriber\LogoutSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+    App\EventListener\EasyAdminFlashListener:
         
+        tags:
+            - { name: kernel.event_subscriber }
+    App\EventListener\UserPasswordListener:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: preUpdate }
+    

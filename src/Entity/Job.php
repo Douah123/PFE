@@ -66,6 +66,8 @@ class Job
     {
         $this->candidature = new ArrayCollection();
         $this->candidatures = new ArrayCollection();
+        $this->createdAt = new \DateTime();
+        $this->expiresAt = (new \DateTime())->add(new \DateInterval('P30D'));
     }
     /*
     public function _construct()

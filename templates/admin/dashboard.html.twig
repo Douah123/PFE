@@ -1,5 +1,6 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
+
 {% block content %}
    <style>
         .analytics-info {
@@ -43,7 +44,7 @@
                 <h3 class="box-title">Employeurs</h3>
                 <ul class="list-inline two-part d-flex align-items-center mb-0">
                     <i class="fa-solid fa-chart-simple"></i>
-                    <li class="ms-auto"><span class="counter text-info">12</span></li>
+                    <li class="ms-auto"><span class="counter text-info">{{ empCount }}</span></li>
                 </ul>
             </div>
         </div>
@@ -59,7 +60,7 @@
                 <h3 class="box-title">Offres</h3>
                 <ul class="list-inline two-part d-flex align-items-center mb-0">
                     <i class="fa-solid fa-chart-simple"></i>
-                    <li class="ms-auto"><span class="counter text-info">7</span></li>
+                    <li class="ms-auto"><span class="counter text-info">{{ jobCount }}</span></li>
                 </ul>
             </div>
         </div>
@@ -68,7 +69,7 @@
                 <h3 class="box-title">Candidatures</h3>
                 <ul class="list-inline two-part d-flex align-items-center mb-0">
                     <i class="fa-solid fa-chart-simple"></i>
-                    <li class="ms-auto"><span class="counter text-info">8</span></li>
+                    <li class="ms-auto"><span class="counter text-info">{{ candCount }}</span></li>
                 </ul>
             </div>
         </div>
@@ -77,7 +78,7 @@
                 <h3 class="box-title">Categories</h3>
                 <ul class="list-inline two-part d-flex align-items-center mb-0">
                     <i class="fa-solid fa-chart-simple"></i>
-                    <li class="ms-auto"><span class="counter text-info">7</span></li>
+                    <li class="ms-auto"><span class="counter text-info">{{ catCount }}</span></li>
                 </ul>
             </div>
         </div>

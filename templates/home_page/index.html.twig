@@ -51,7 +51,8 @@
                                     <div class="job-tittle">
                                         <a href="{{ path('app_job_detail', { 'id': job.id }) }}"><h4>{{ job.title }}</h4></a>
                                         <ul>
-                                            <li>>{{ job.category|striptags }}</li>
+                                            <li> {{ job.category }}</li>
+                                            <li></li>
                                             <li><i class="fas fa-map-marker-alt"></i>{{ job.location }}</li>
                                             <li>{{ job.salary }}</li>
                                         </ul>

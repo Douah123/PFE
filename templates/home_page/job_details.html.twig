@@ -90,7 +90,7 @@
                                <h4>Information de l'Entreprise</h4>
                            </div>
                               <span>Description</span>
-                              <p>{{ employeur.description }}</p>
+                              <p>{{ employeur.description|striptags }}</p>
                             <ul>
                                 <li>Name: <span>{{ employeur.name }}</span></li>
                                 <li>Adresse : <span>{{ employeur.adress }}</span></li>

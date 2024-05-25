@@ -36,6 +36,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $plainPassword = null;
+
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
 
@@ -45,7 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    #[ORM\OneToOne(targetEntity: Employeur::class, mappedBy: "user")]
+    #[ORM\OneToOne(targetEntity: Employeur::class, mappedBy: "user", cascade:["remove"])]
     private ?Employeur $employeur = null;
 
     #[ORM\OneToMany(targetEntity: Candidature::class, mappedBy: 'user_')]
@@ -65,6 +68,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $lastLogin = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $lastLogout = null;
 
     public function __construct()
     {
@@ -284,7 +290,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-   
+    public function getLastLogout(): ?\DateTimeInterface
+    {
+        return $this->lastLogout;
+    }
+
+    public function setLastLogout(?\DateTimeInterface $lastLogout): static
+    {
+        $this->lastLogout = $lastLogout;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(?string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
 
     
 }
