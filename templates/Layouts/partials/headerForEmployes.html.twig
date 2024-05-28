@@ -28,7 +28,7 @@
                             <div class="col-lg-3 col-md-2">
                                 <!-- Logo -->
                                 <div class="logo">
-                                    <img src="{{ asset('assets/img/logo/logo2.png') }}" alt="">
+                                    <a href="{{ path('app_home_page') }}"><img src="{{ asset('assets/img/logo/logo2.png') }}" alt=""></a>
                                 </div>
  
                             </div>
@@ -38,11 +38,10 @@
                                     <div class="main-menu">
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
-                                                <li><a href="index.html">Accueil</a></li>
+                                                <li><a href="{{ path('accueil_employeur') }}">Accueil</a></li>
                                                 <li><a href="{{ path('app_job_index') }}">Mes Offres</a></li>
-                                                <li><a href="about.html">A propos</a></li>
-                                                
-                                                <li><a href="contact.html">Contact</a></li>
+                                                <li><a href="{{ path('a_propos') }}">A propos</a></li>
+                                                <li><a href="{{ path('app_contact') }}">Contact</a></li>
                                             </ul>
                                         </nav>
                                     </div>          

@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 
 class JobType extends AbstractType
@@ -17,16 +18,10 @@ class JobType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('type', ChoiceType::class, [
-                'choices' => [
-                    'CDD' => 'CDD',
-                    'CDI' => 'CDI',
-                    'Temps plein' => 'Temps plein',
-                    'Temps partiel' => 'Temps partiel',
-                    'CIVP' => 'CIVP',
-                ],
+            ->add('type', TextType::class, [
+                
                 'attr' => [
-                        'label' => 'Type de contrat',
+                        'placeholder' => 'CDI,CDD,temps plein...autre',
                  ],
             ])
             ->add('location')

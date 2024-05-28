@@ -7,14 +7,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Job;
+use App\Entity\Employeur;
 use App\Entity\Candidature;
 use App\Form\CandidatureType;
 use App\Repository\JobRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\MailerService;
+
 class CandidatureController extends AbstractController
 {
+    private $mailerService;
+    
+
+    public function __construct(MailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+        
+    }
     #[Route('/postuler/{id}', name: 'postuler')]
-public function index(Request $request, EntityManagerInterface $entityManager, $id, JobRepository $jobRepository): Response
+public function index(Request $request, EntityManagerInterface $entityManager, $id, JobRepository $jobRepository, MailerService $mailerService): Response
 {
     $user = $this->getUser();
     $job = $jobRepository->find($id);
@@ -48,6 +59,14 @@ public function index(Request $request, EntityManagerInterface $entityManager, $
 
         $entityManager->persist($candidature);
         $entityManager->flush();
+
+        $employeur = $job->getEmployeur();
+        $this->mailerService->sendEmail(
+            $employeur->getEmail(),
+            'Reception d\'une nouvelle candidature',
+            'Votre Offre <strong>' . $job->getTitle() . '</strong> a reçu une nouvelle candidature <br>
+            Veuillez consulter vos Offres.'
+        );
 
         $this->addFlash('success', 'Vous avez postulé avec succès.');
         return $this->redirectToRoute('postuler', ['id' => $job->getId()]);

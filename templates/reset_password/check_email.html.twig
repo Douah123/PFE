@@ -3,11 +3,12 @@
 {% block title %}Vérifiez votre e-mail{% endblock %}
 
 {% block body %}
-    <h1>Vérifiez votre e-mail</h1>
-
-    <p>
+    
+    <div class="cat"><h2 class="text-center">Vérifiez votre e-mail</h2></div>
+    <p class="text-center">
         Si un compte avec cet e-mail existe, un e-mail a été envoyé contenant un lien pour réinitialiser votre mot de passe.
         Le lien expirera dans {{ resetToken.expiresAt|date('g') }} heures.
     </p>
-    <p>Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier de spam ou réessayer.</p>
+    <p class="text-center">Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier de spam ou réessayer.</p>
+    <br><br><br><br><br><br><br><br><br><br>
 {% endblock %}

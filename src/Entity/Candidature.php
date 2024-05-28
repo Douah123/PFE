@@ -128,7 +128,7 @@ class Candidature
         return $this->LettreMotivation;
     }
 
-    public function setLettreMotivation(string $LettreMotivation): static
+    public function setLettreMotivation(?string $LettreMotivation): static
     {
         $this->LettreMotivation = $LettreMotivation;
 
@@ -140,7 +140,7 @@ class Candidature
         return $this->CV;
     }
 
-    public function setCV(string $CV): static
+    public function setCV(?string $CV): static
     {
         $this->CV = $CV;
 

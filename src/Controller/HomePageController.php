@@ -12,16 +12,21 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\JobRepository;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use App\Service\MailerService;
 Use App\Repository\UserRepository;
 
 
 
 class HomePageController extends AbstractController
 {
+    private MailerService $mailerService;
+
+    public function __construct(MailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+    }
     #[Route('/', name: 'app_home_page')]
     public function index(UserRepository $userRepository, jobRepository $jobRepository, Request $request, PaginatorInterface $paginatorInterface): Response
     {  
@@ -69,13 +74,11 @@ class HomePageController extends AbstractController
 
     }
 
-    #[Route('/job/listes', name: 'listes_jobs')]
-    public function liste(jobRepository $jobRepository): Response
+    #[Route('/apropos', name: 'a_propos')]
+    public function apropos(): Response
     {
     
-        return $this->render('RechercherJob/jobListes.html.twig', [
-            'job'=>$jobRepository->findAll()
-        ]);
+        return $this->render('home_page/apropos.html.twig');
     }
 
     #[Route('afficher/candidatures', name: 'afficher_candidatures')]
@@ -98,24 +101,16 @@ class HomePageController extends AbstractController
     }
 
      #[Route('/test-email', name: 'test_email')]
-    public function sendTestEmail(MailerInterface $mailer): Response
-    {
-        $email = (new Email())
-            ->from('jobFinder@gmail.com')
-            ->to('dominique.garnier@hotmail.fr')  // Remplacez par votre e-mail
-            ->subject('Test Email')
-            ->text('This is a test email.')
-            ->html('<p>This is a test email.</p>');
-            try {
-                $mailer->send($email);
-                return new Response('Email sent');
-            } catch (TransportExceptionInterface $e) {
-                // Log the error or handle it as needed
-                // For example, you could log the error message
-                error_log('Email sending failed: ' . $e->getMessage());
-            
-                // Return a response indicating the failure
-                return new Response('Failed to send email: ' . $e->getMessage());
-            }
-    }
+     public function sendEmail(): Response
+     {
+         $this->mailerService->sendEmail(
+             'douahbarry@gmail.com',
+             'Test Email',
+             '<p>This is a test email.</p>'
+         );
+ 
+         return new Response('Email sent successfully');
+        }
+
+        
 }

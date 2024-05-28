@@ -38,3 +38,6 @@ services:
             - { name: doctrine.event_listener, event: prePersist }
             - { name: doctrine.event_listener, event: preUpdate }
     
+    App\Service\PHPMailerService: ~
+    App\Service\MailerService: ~
+    

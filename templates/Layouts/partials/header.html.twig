@@ -28,7 +28,7 @@
                             <div class="col-lg-3 col-md-2">
                                
                                 <div class="logo">
-                                    <img src="{{ asset('assets/img/logo/logo3.png') }}" alt="">
+                                    <a href="{{ path('app_home_page') }}"><img src="{{ asset('assets/img/logo/logo3.png') }}" alt=""></a>
                                 </div>
  
                             </div>
@@ -38,15 +38,23 @@
                                     <div class="main-menu ">
                                         <nav class="d-none d-lg-block">
                                             <ul id="navigation">
-                                                <li><a href="{{ path('app_home_page') }}">Accueil</a></li>
-                                                <li><a href="{{ path('afficher_candidatures') }}">Mes candidatures</a></li>
-                                                <li><a href="">A propos</a></li>
-                                                <li><a href="contact.html">Contact</a></li>
-                                                <!-- Ajoutez une classe spécifique au lien pour les petits écrans -->
-                                                <li class="d-md-none">
-                                                    <a href="{{ path('accueil_employeur') }}">Passer à employeur</a>
-                                                </li>
-
+                                                    <li><a href="{{ path('app_home_page') }}">Accueil</a></li>
+                                                    <li><a href="{{ path('afficher_candidatures') }}">Mes candidatures</a></li>
+                                                    <li><a href="{{ path('a_propos') }}">A propos</a></li>
+                                                    <li><a href="{{ path('app_contact') }}">Contact</a></li>
+                                                    <!-- Ajoutez une classe spécifique au lien pour les petits écrans -->
+                                                    <li class="d-md-none">
+                                                        <a href="{{ path('accueil_employeur') }}">Passer à employeur</a>
+                                                    </li>
+                                                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                                                    <li class="d-md-none">
+                                                        <a href="{{path('app_logout')}}">Deconnexion</a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="d-md-none">
+                                                        <a href="{{path('app_login')}}">Connexion</a>
+                                                    </li>
+                                            {% endif %}
                                             </ul>
                                         </nav>
                                     </div>      

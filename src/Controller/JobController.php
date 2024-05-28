@@ -14,14 +14,21 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Form\StatusCandidatureType;
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
+use App\Service\MailerService;
 
 
 
 #[Route('/job')]
 class JobController extends AbstractController
 {
+    private $mailerService;
+    
+
+    public function __construct(MailerService $mailerService)
+    {
+        $this->mailerService = $mailerService;
+        
+    }
     #[Route('/', name: 'app_job_index', methods: ['GET'])]
     public function index(JobRepository $jobRepository): Response
     {
@@ -68,7 +75,7 @@ class JobController extends AbstractController
 
             $entityManager->persist($job);
             $entityManager->flush();
-
+            $this->addFlash('success', 'L\'élement a été créé avec succès.');
             return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -91,7 +98,7 @@ class JobController extends AbstractController
     }
 
     #[Route('/job/{id}/accept/{candidatureId}', name: 'accept_candidature', methods: ['POST'])]
-    public function acceptCandidature(Request $request, $id, Job $job, $candidatureId, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    public function acceptCandidature(Request $request, $id, Job $job, $candidatureId, EntityManagerInterface $entityManager, MailerService $mailerService): Response
     {
         
 
@@ -106,18 +113,16 @@ class JobController extends AbstractController
         
             $entityManager->persist($candidature);
             $entityManager->flush();
-
+            $this->addFlash('success', 'La candidature a été acceptée avec succès.');
+            return $this->redirectToRoute('app_job_index');
             $user = $candidature->getUser(); // Utilisation de la méthode getUser
 
         // Envoyer un email à l'utilisateur candidat
-        $email = (new Email())
-        ->from('jobfinder@gmail.com')
-        ->to($user->getEmail())
-        ->subject('Mise à jour de votre candidature')
-        ->text('Votre candidature pour le poste de ' . $job->getTitle() . ' a été acceptée.')
-        ->html('<p>Votre candidature pour le poste de <strong>' . $job->getTitle() . '</strong> a été acceptée.</p>');
-
-        $mailer->send($email);
+        $this->mailerService->sendEmail(
+            $user->getEmail(),
+            'Mise à jour de votre candidature',
+            'Votre candidature pour le poste de <strong>' . $job->getTitle() . '</strong> a été acceptée.'
+        );
         
             //dd($email); die;
             // Créer le formulaire pour le statut de la candidature
@@ -148,8 +153,7 @@ class JobController extends AbstractController
                 $entityManager->persist($candidature);
                 $entityManager->flush();
 
-                // Rediriger vers la page d'affichage de l'offre
-                return $this->redirectToRoute('app_job_index');
+               
             }
         }
         return $this->render('job/show.html.twig', [
@@ -174,6 +178,16 @@ class JobController extends AbstractController
         
                 $entityManager->persist($candidature);
                 $entityManager->flush();
+                $this->addFlash('success', 'La candidature a été refusée avec succès.');
+                return $this->redirectToRoute('app_job_index');
+                $user = $candidature->getUser(); // Utilisation de la méthode getUser
+
+        // Envoyer un email à l'utilisateur candidat
+            $this->mailerService->sendEmail(
+                $user->getEmail(),
+                'Mise A jour de votre candidature',
+                'Votre candidature pour le poste de <strong>' . $job->getTitle() . '</strong> a été refusé.'
+            );
             // Créer le formulaire pour le statut de la candidature
             $statusForm = $this->createForm(StatusCandidatureType::class, null, [
                 'action' => $this->generateUrl('accept_candidature', ['id' => $job->getId(), 'candidatureId' => $candidature->getId()]),
@@ -219,6 +233,7 @@ class JobController extends AbstractController
             $job->setUpdatedAt(new \datetime);
             $entityManager->flush();
 
+            $this->addFlash('success', 'L\'élement a été modifié avec succès.');
             return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -233,19 +248,10 @@ class JobController extends AbstractController
     {
         // Vérifie si le jeton CSRF est valide
         if ($this->isCsrfTokenValid('delete'.$job->getId(), $request->request->get('_token'))) {
-            // Vérifie s'il existe des candidatures liées à ce job
-            $candidatures = $job->getCandidatures();
-
-            if (!empty($candidatures)) {
-                // Supprime les candidatures liées
-                foreach ($candidatures as $candidature) {
-                    $entityManager->remove($candidature);
-                }
-            }
-
-            // Supprime le job
+            
             $entityManager->remove($job);
             $entityManager->flush();
+            $this->addFlash('success', 'L\'élement a été supprimé avec succès.');
         }
 
         return $this->redirectToRoute('app_job_index', [], Response::HTTP_SEE_OTHER);
